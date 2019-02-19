@@ -13,6 +13,6 @@ struct FIRDrinkModel: Decodable {
     let name: String
     let imageURL: String
     let description: String
-    let nutrients: [String: Float] // Possibly use FIRNutrientsModel
+    let nutrients: [String: Int] // Possibly use FIRNutrientsModel
     let orderSteps: [String]
 }

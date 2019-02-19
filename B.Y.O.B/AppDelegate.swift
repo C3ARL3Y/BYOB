@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = CreateBaristaPicksViewController()
+        window?.rootViewController = ViewBaristaPicsViewController()
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 175/255, green: 136/255, blue: 117/255, alpha: 1)
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 10)!], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1)], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        
+        FirebaseApp.configure()
         return true
     }
 

@@ -65,13 +65,14 @@ final class CreateBaristaPicksViewController: UIViewController {
         $0.clipsToBounds = true
     }
     
-    let doneButton = UIButton(type: .system).configured {
+    lazy var saveDrinkButton = UIButton(type: .system).configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .tanTitle
         $0.setTitleColor(.tanBG, for: .normal)
         $0.setTitle("Save Drink", for: .normal)
         $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
+        $0.addTarget(self, action: #selector(saveDrinkButtonPressed), for: .touchUpInside)
     }
     
     var nutrientsModel: FIRNutrientsModel?
@@ -82,6 +83,12 @@ final class CreateBaristaPicksViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .tanBG
         setupViews()
+    }
+    
+    @objc func saveDrinkButtonPressed() {
+        // Upload data to firebase
+        FirebaseService.setDrink(uuid: nil, name: nameTextField.text ?? "No name", image: selectedImage ?? UIImage(), description: descriptionTextView.text, nutrients: nutrientsModel, steps: steps)
+        
     }
     
     @objc func nutrientsButtonPressed() {
@@ -119,7 +126,7 @@ final class CreateBaristaPicksViewController: UIViewController {
         view.addSubview(descriptionTextView)
         view.addSubview(nutrientsButton)
         view.addSubview(orderSteps)
-        view.addSubview(doneButton)
+        view.addSubview(saveDrinkButton)
         
         nameTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 60))
         
@@ -132,11 +139,8 @@ final class CreateBaristaPicksViewController: UIViewController {
         
         orderSteps.anchor(top: descriptionTextView.bottomAnchor, leading: nil, bottom: nil, trailing: descriptionTextView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 60))
         
-        doneButton.anchor(top: nil, leading: descriptionTextView.leadingAnchor, bottom: view.bottomAnchor, trailing: descriptionTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0), size: CGSize(width: 0, height: 60))
+        saveDrinkButton.anchor(top: nil, leading: descriptionTextView.leadingAnchor, bottom: view.bottomAnchor, trailing: descriptionTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0), size: CGSize(width: 0, height: 60))
     }
-    
-    
-    
 }
 
 extension CreateBaristaPicksViewController: UITextViewDelegate, UITextFieldDelegate {
