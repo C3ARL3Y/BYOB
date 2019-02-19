@@ -17,7 +17,7 @@ target 'B.Y.O.B' do
     # Pods for testing
     pod 'Firebase/Core'
     pod 'Firebase/Database'
-
+    pod 'Firebase/Storage'
   end
 
 end
