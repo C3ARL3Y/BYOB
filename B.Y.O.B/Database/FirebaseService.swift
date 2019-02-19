@@ -12,7 +12,7 @@ struct FirebaseService {
     private static let REF_DRINKS = Database.database().reference().child("drinks")
     private static let REF_IMAGES = Storage.storage().reference().child("images")
     
-    static func setDrink(uuid: String?, name: String, image: UIImage, description: String, nutrients: FIRNutrientsModel?, steps: [String]) {
+    static func setDrink(uuid: String?, name: String, image: UIImage, description: String, nutrients: FIRNutrientsModel?, steps: [String], type: DrinkType) {
         let uid = uuid ?? UUID().uuidString
         
         upload(image: image) { imageUrl in
@@ -27,7 +27,8 @@ struct FirebaseService {
                                        "description": description,
                                        "steps": steps,
                                        "imageUrl": imageUrl,
-                                       "nutrients": nutrientsData]
+                                       "nutrients": nutrientsData,
+                                       "type": type.rawValue]
             
             REF_DRINKS.child(uid).setValue(data)
         }

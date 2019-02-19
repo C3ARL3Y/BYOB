@@ -15,4 +15,5 @@ struct FIRDrinkModel: Decodable {
     let description: String
     let nutrients: [String: Int] // Possibly use FIRNutrientsModel
     let orderSteps: [String]
+    let type: String 
 }

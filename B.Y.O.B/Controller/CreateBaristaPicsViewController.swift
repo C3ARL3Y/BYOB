@@ -78,6 +78,8 @@ final class CreateBaristaPicksViewController: UIViewController {
     var nutrientsModel: FIRNutrientsModel?
     var selectedImage: UIImage?
     var steps = [String]()
+    // Set from BaristPick's ViewController
+    var drinkType: DrinkType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,8 +89,8 @@ final class CreateBaristaPicksViewController: UIViewController {
     
     @objc func saveDrinkButtonPressed() {
         // Upload data to firebase
-        FirebaseService.setDrink(uuid: nil, name: nameTextField.text ?? "No name", image: selectedImage ?? UIImage(), description: descriptionTextView.text, nutrients: nutrientsModel, steps: steps)
-        
+        FirebaseService.setDrink(uuid: nil, name: nameTextField.text ?? "No name", image: selectedImage ?? UIImage(), description: descriptionTextView.text, nutrients: nutrientsModel, steps: steps, type: drinkType)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func nutrientsButtonPressed() {
