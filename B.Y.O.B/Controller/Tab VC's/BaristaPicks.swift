@@ -102,15 +102,15 @@ class BaristaPicks: UIViewController {
     }
     
     @objc func handleHotCoffee() {
-        self.present(HotDrinksMenu(), animated: true, completion: {})
+        present(ViewBaristaPicsViewController(), animated: true, completion: nil)
     }
     
     @objc func handleIcedCoffee() {
-        self.present(IcedDrinksMenu(), animated: true, completion: {})
+        present(ViewBaristaPicsViewController(), animated: true, completion: nil)
     }
     
     @objc func handleTeas() {
-        self.present(TeasMenu(), animated: true, completion: {})
+        present(ViewBaristaPicsViewController(), animated: true, completion: nil)
     }
     
 }
