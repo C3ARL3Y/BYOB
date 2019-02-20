@@ -10,8 +10,6 @@ import UIKit
 
 class ViewBaristaPicsViewController: UIViewController {
     
-    // Fetch drinks of certain type from firebase 
-    
     var drinksType: DrinkType!
     
     var drinks = [FIRDrinkModel]()
@@ -30,30 +28,30 @@ class ViewBaristaPicsViewController: UIViewController {
         $0.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
     }
     
-    let drinkTableView = UITableView().configured {
-        $0.backgroundColor = .gray
+    lazy var drinkTableView = UITableView().configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.separatorColor = .clear
+        $0.delegate = self
+        $0.dataSource = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         view.backgroundColor = .tanBG
+        fetchDrinks()
     }
     
-    // Fetch data
-    // Present data to UI    [image] - drink name
     // add ability to edit previous drinks
     // Delete drinks
     
     func fetchDrinks() {
-        
-        
-        
+        FirebaseService.fetchDrinks(of: drinksType) { [weak self] (model) in
+            self?.drinks.append(model)
+            self?.drinkTableView.reloadData()
+        }
     }
     
-    
-
     func setupViews() {
         view.addSubview(drinkTableView)
         view.addSubview(createDrinkButton)
@@ -75,5 +73,30 @@ class ViewBaristaPicsViewController: UIViewController {
     
     @objc func doneButtonPressed() {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension ViewBaristaPicsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return drinks.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell().configured {
+            $0.imageView?.image = UIImage(named: "Checkbox")
+            $0.textLabel?.text = drinks[indexPath.row].name
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let drink = drinks[indexPath.row]
+        present(ViewDrinkViewController().configured {
+            $0.drink = drink
+        }, animated: true, completion: nil)
     }
 }

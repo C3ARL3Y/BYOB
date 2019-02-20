@@ -11,13 +11,17 @@ import UIKit
 struct FirebaseService {
     private static let REF_DRINKS = Database.database().reference().child("drinks")
     private static let REF_IMAGES = Storage.storage().reference().child("images")
-    
+}
+
+// Upload data
+extension FirebaseService {
     static func setDrink(uuid: String?, name: String, image: UIImage, description: String, nutrients: FIRNutrientsModel?, steps: [String], type: DrinkType) {
         let uid = uuid ?? UUID().uuidString
         
         upload(image: image) { imageUrl in
             
             var nutrientsData = [String: Int]()
+            let typeValue = type.rawValue
             
             if let nutrients = nutrients {
                 nutrientsData = FIRNutrientsModel.dict(from: nutrients)
@@ -26,11 +30,11 @@ struct FirebaseService {
             let data: [String: Any] = ["name": name,
                                        "description": description,
                                        "steps": steps,
-                                       "imageUrl": imageUrl,
+                                       "imageURL": imageUrl,
                                        "nutrients": nutrientsData,
-                                       "type": type.rawValue]
+                                       "type": typeValue]
             
-            REF_DRINKS.child(uid).setValue(data)
+            REF_DRINKS.child(typeValue).child(uid).setValue(data)
         }
     }
     
@@ -51,6 +55,23 @@ struct FirebaseService {
             ref.downloadURL(completion: { (url, _) in
                 completion(url?.absoluteString ?? "")
             })
+        }
+    }
+}
+
+// Fetch data
+extension FirebaseService {
+    
+    static func fetchDrinks(of type: DrinkType, completion: @escaping (FIRDrinkModel)->()) {
+        REF_DRINKS.child(type.rawValue).queryOrderedByKey().observe(.value) { (snapshot) in
+            if let value = snapshot.value as? [String: Any]{
+                for key in value.keys {
+                    if let dict = value[key] as? [String: Any] {
+                        let model = FIRDrinkModel.model(from: dict, with: key)
+                        completion(model)
+                    }
+                }
+            }
         }
     }
 }
