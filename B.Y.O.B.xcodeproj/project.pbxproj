@@ -18,6 +18,7 @@
 		094A380A221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A3809221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift */; };
 		0964C8D3221C7FCE0011B647 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964C8D2221C7FCE0011B647 /* Animations.swift */; };
 		0964C8D8221CA0E40011B647 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964C8D7221CA0E40011B647 /* FirebaseService.swift */; };
+		0964C8DA221CABE20011B647 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0964C8D9221CABE20011B647 /* GoogleService-Info.plist */; };
 		09EBBEC7221BA8DA00FEF1D0 /* StepsBaristPicksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EBBEC6221BA8DA00FEF1D0 /* StepsBaristPicksViewController.swift */; };
 		0D9D45CD01160D97B044C604 /* Pods_B_Y_O_B.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB17669ABA5227CC94D0152 /* Pods_B_Y_O_B.framework */; };
 		A53BB28F2208B51A00F5ADBB /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53BB28E2208B51A00F5ADBB /* CustomTabBarController.swift */; };
@@ -66,6 +67,7 @@
 		094A3809221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsBaristaPicksViewController.swift; sourceTree = "<group>"; };
 		0964C8D2221C7FCE0011B647 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		0964C8D7221CA0E40011B647 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		0964C8D9221CABE20011B647 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09EBBEC6221BA8DA00FEF1D0 /* StepsBaristPicksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsBaristPicksViewController.swift; sourceTree = "<group>"; };
 		482C0349AFACA9CA65A9C8E2 /* Pods-B.Y.O.B.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-B.Y.O.B.release.xcconfig"; path = "Pods/Target Support Files/Pods-B.Y.O.B/Pods-B.Y.O.B.release.xcconfig"; sourceTree = "<group>"; };
 		A53BB28E2208B51A00F5ADBB /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				A59ED65622012DBA002E1F19 /* Assets.xcassets */,
 				A59ED65822012DBA002E1F19 /* LaunchScreen.storyboard */,
 				A59ED65B22012DBA002E1F19 /* Info.plist */,
+				0964C8D9221CABE20011B647 /* GoogleService-Info.plist */,
 			);
 			path = B.Y.O.B;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A59ED65A22012DBA002E1F19 /* LaunchScreen.storyboard in Resources */,
+				0964C8DA221CABE20011B647 /* GoogleService-Info.plist in Resources */,
 				A59ED65722012DBA002E1F19 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

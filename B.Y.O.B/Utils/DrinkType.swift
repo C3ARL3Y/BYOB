@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DrinkType {
+enum DrinkType: String {
     case hot
     case iced
     case tea
