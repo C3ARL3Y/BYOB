@@ -15,26 +15,31 @@ struct FirebaseService {
 
 // Upload data
 extension FirebaseService {
-    static func setDrink(uuid: String?, name: String, image: UIImage, description: String, nutrients: FIRNutrientsModel?, steps: [String], type: DrinkType) {
+    static func setDrink(uuid: String?, name: String, image: UIImage?, description: String, nutrients: FIRNutrientsModel?, steps: [String], type: DrinkType, imageURL: String?) {
         let uid = uuid ?? UUID().uuidString
         
-        upload(image: image) { imageUrl in
-            
-            var nutrientsData = [String: Int]()
-            let typeValue = type.rawValue
-            
-            if let nutrients = nutrients {
-                nutrientsData = FIRNutrientsModel.dict(from: nutrients)
+        var nutrientsData = [String: Int]()
+        let typeValue = type.rawValue
+        
+        if let nutrients = nutrients {
+            nutrientsData = FIRNutrientsModel.dict(from: nutrients)
+        }
+        
+        var data: [String: Any] = ["name": name,
+                                   "description": description,
+                                   "steps": steps,
+                                   "imageURL": imageURL ?? "",
+                                   "nutrients": nutrientsData,
+                                   "type": typeValue]
+        
+        if let image = image {
+            upload(image: image) { imageUrl in
+                data.updateValue(imageUrl, forKey: "imageURL")
+                REF_DRINKS.child(typeValue).child(uid).setValue(data)
+                return
             }
-            
-            let data: [String: Any] = ["name": name,
-                                       "description": description,
-                                       "steps": steps,
-                                       "imageURL": imageUrl,
-                                       "nutrients": nutrientsData,
-                                       "type": typeValue]
-            
-            REF_DRINKS.child(typeValue).child(uid).setValue(data)
+        } else {
+             REF_DRINKS.child(typeValue).child(uid).setValue(data)
         }
     }
     
@@ -73,5 +78,13 @@ extension FirebaseService {
                 }
             }
         }
+    }
+}
+
+// Delete data
+extension FirebaseService {
+    
+    static func deleteDrink(of type: String, with uuid: String) {
+        REF_DRINKS.child(type).child(uuid).removeValue()
     }
 }

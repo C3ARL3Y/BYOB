@@ -10,8 +10,6 @@ import UIKit
 
 final class CreateBaristaPicksViewController: UIViewController {
     
-    var data = [String: Any]()
-    
     lazy var nameTextField = UITextField().configured {
         $0.placeholder = "Drink Name"
         $0.textColor = .tanTitle
@@ -74,13 +72,32 @@ final class CreateBaristaPicksViewController: UIViewController {
         $0.clipsToBounds = true
         $0.addTarget(self, action: #selector(saveDrinkButtonPressed), for: .touchUpInside)
     }
+
+    var drink: FIRDrinkModel? {
+        willSet {
+            guard let drink = newValue else {
+                return
+            }
+            nutrientsModel = FIRNutrientsModel.model(from: drink.nutrients)
+            steps = drink.steps
+            drinkType = DrinkType(rawValue: drink.type)
+            uuid = drink.uid
+            
+            descriptionTextView.text = drink.description
+            nameTextField.text = drink.name
+            UIImage.from(imageURL: drink.imageURL) { (image) in
+                self.imagePickerButton.setImage(image, for: .normal)
+            }
+        }
+    }
     
+    var newImage = false
     var nutrientsModel: FIRNutrientsModel?
     var selectedImage: UIImage?
     var steps = [String]()
     // Set from BaristPick's ViewController
     var drinkType: DrinkType!
-    
+    var uuid: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .tanBG
@@ -89,7 +106,12 @@ final class CreateBaristaPicksViewController: UIViewController {
     
     @objc func saveDrinkButtonPressed() {
         // Upload data to firebase
-        FirebaseService.setDrink(uuid: nil, name: nameTextField.text ?? "No name", image: selectedImage ?? UIImage(), description: descriptionTextView.text, nutrients: nutrientsModel, steps: steps, type: drinkType)
+        if newImage {
+            FirebaseService.setDrink(uuid: uuid, name: nameTextField.text ?? "No name", image: selectedImage, description: descriptionTextView.text, nutrients: nutrientsModel, steps: steps, type: drinkType, imageURL: nil)
+        } else {
+            FirebaseService.setDrink(uuid: uuid, name: nameTextField.text ?? "No name", image: nil, description: descriptionTextView.text, nutrients: nutrientsModel, steps: steps, type: drinkType, imageURL: drink?.imageURL)
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     
@@ -170,6 +192,7 @@ extension CreateBaristaPicksViewController: UIImagePickerControllerDelegate, UIN
         
         if let image = info[.originalImage] as? UIImage{
             // Selected Image
+            newImage = true
             imagePickerButton.setImage(image, for: .normal)
             selectedImage = image
             dismiss(animated: true, completion: nil)

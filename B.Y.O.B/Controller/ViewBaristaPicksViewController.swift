@@ -39,6 +39,10 @@ class ViewBaristaPicsViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         view.backgroundColor = .tanBG
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         fetchDrinks()
     }
     
@@ -46,10 +50,24 @@ class ViewBaristaPicsViewController: UIViewController {
     // Delete drinks
     
     func fetchDrinks() {
+        drinks.removeAll()
         FirebaseService.fetchDrinks(of: drinksType) { [weak self] (model) in
-            self?.drinks.append(model)
-            self?.drinkTableView.reloadData()
+            if let mainSelf = self {
+                if !mainSelf.modelAlreadyExists(uuid: model.uid) {
+                    self?.drinks.append(model)
+                    self?.drinkTableView.reloadData()
+                }
+            }
         }
+    }
+    
+    func modelAlreadyExists(uuid: String) -> Bool {
+        for fetchedDrink in drinks {
+            if fetchedDrink.uid == uuid {
+                return true
+            }
+        }
+        return false
     }
     
     func setupViews() {
@@ -87,9 +105,9 @@ extension ViewBaristaPicsViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell().configured {
-            $0.imageView?.image = UIImage(named: "Checkbox")
-            $0.textLabel?.text = drinks[indexPath.row].name
+        return UITableViewCell().configured { cell in
+            let drink = drinks[indexPath.row]
+            cell.textLabel?.text = drink.name
         }
     }
     
@@ -98,5 +116,23 @@ extension ViewBaristaPicsViewController: UITableViewDelegate, UITableViewDataSou
         present(ViewDrinkViewController().configured {
             $0.drink = drink
         }, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let drink = drinks[indexPath.row]
+        let editAction = UITableViewRowAction(style: .default, title: "Edit", handler: { (action, indexPath) in
+            self.present(CreateBaristaPicksViewController().configured {
+                // set data in vc to data that was downloaded from firebase
+                $0.drink = drink
+            }, animated: true, completion: nil)
+        })
+        
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+            FirebaseService.deleteDrink(of: drink.type, with: drink.uid)
+            let _ = self.drinks.remove(at: indexPath.row)
+            tableView.reloadData()
+        })
+        
+        return [deleteAction, editAction]
     }
 }
