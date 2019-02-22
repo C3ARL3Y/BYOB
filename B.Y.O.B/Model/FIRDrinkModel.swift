@@ -34,7 +34,7 @@ extension FIRDrinkModel {
     static func dict(from model: FIRDrinkModel) -> [(String, Any)] {
         var dict = [(String, Any)]()
         dict.append(("[DESCRIPTION]", ""))
-        dict.append((model.description, forKey: "description"))
+        dict.append(("description", forKey: model.description))
         dict.append(("[NUTRITION FACTS]", ""))
         for (key, value) in model.nutrients {
             dict.append((key, value))

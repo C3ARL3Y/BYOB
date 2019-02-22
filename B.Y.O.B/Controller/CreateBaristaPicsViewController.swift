@@ -183,6 +183,13 @@ extension CreateBaristaPicksViewController: UITextViewDelegate, UITextFieldDeleg
         Animations.fadeOut(view: nameTextField)
         Animations.move(view: descriptionTextView, x: 0, y: -descriptionTextView.frame.height)
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 241  // 110 is the character limit
+        // Need to add max number of lines for textview 
+    }
 }
 
 extension CreateBaristaPicksViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
