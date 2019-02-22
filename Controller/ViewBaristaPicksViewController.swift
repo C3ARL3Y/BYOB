@@ -33,8 +33,6 @@ class ViewBaristaPicsViewController: UIViewController {
         $0.separatorColor = .clear
         $0.delegate = self
         $0.dataSource = self
-        $0.layer.cornerRadius = 30
-        $0.clipsToBounds = true 
     }
     
     override func viewDidLoad() {

@@ -50,7 +50,7 @@ class ViewDrinkViewController: UIViewController {
     
     var contentView = UIView()
     
-    var infoLabels = [UIView]()
+    var infoLabels = [UILabel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,26 +75,15 @@ class ViewDrinkViewController: UIViewController {
 
     func createInfoLabels() {
         FIRDrinkModel.dict(from: drink).forEach { (key, value) in
-            if key == "description" {
-                // Use a uitextview instead of label
-                let textView = UITextView()
-                textView.isUserInteractionEnabled = false
-                textView.backgroundColor = .clear
-                textView.textColor = .tanTitle
-                textView.font = UIFont.systemFont(ofSize: 15)
-                textView.text = "\(value)"
-                infoLabels.append(textView)
-            } else {
-                let label = UILabel()
-                label.translatesAutoresizingMaskIntoConstraints = false
-                label.text = key + ": \(value)"
-                label.textColor = UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1)
-                label.textAlignment = .center
-                label.lineBreakMode = .byCharWrapping
-                label.numberOfLines = 0
-                label.textAlignment = .left
-                infoLabels.append(label)
-            }
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = key + ": \(value)"
+            label.textColor = UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1)
+            label.textAlignment = .center
+            label.lineBreakMode = .byCharWrapping
+            label.numberOfLines = 0
+            label.textAlignment = .left
+            infoLabels.append(label)
         }
     }
     
@@ -124,49 +113,24 @@ class ViewDrinkViewController: UIViewController {
       scrollView.anchor(top: imageView.bottomAnchor, leading: view.leadingAnchor, bottom: backButton.topAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10))
     }
     
-    func calculateHeight() -> CGFloat {
-        return CGFloat(infoLabels.count * 50)
-    }
-    
-    func calculateHeight(forText text: String) -> CGFloat {
-        return CGFloat(25 * (text.count / 48))
+    func calculateHeight() -> Int {
+        return infoLabels.count * 50
     }
     
     func setupScrollView() {
         scrollView.addSubview(contentView)
         
-        contentView.anchor(top: scrollView.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
-        let heightAnchor = contentView.heightAnchor.constraint(equalToConstant: calculateHeight())
-        heightAnchor.isActive = true
-
-        var recentView: UIView?
-        infoLabels.forEach { view in
-            contentView.addSubview(view)
-            
-            if let textView = view as? UITextView {
-                let calculatedConstant = calculateHeight(forText: textView.text)
-                // 48 chars per line
-                // size += 20 per line
-                if let recentView = recentView {
-                    textView.anchor(top: recentView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: calculatedConstant))
-                    
-                } else {
-                    textView.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: calculatedConstant))
-                }
-                
-                // Update contentView Height
-                heightAnchor.isActive = false
-                contentView.heightAnchor.constraint(equalToConstant: CGFloat(calculateHeight() + calculatedConstant)).isActive = true 
-                
-            } else if let label = view as? UILabel {
-                if let recentView = recentView {
-                    // Calculate size of descriptionTextView FOr
-                    label.anchor(top: recentView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 40))
-                } else {
-                    label.anchor(top: contentView.topAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 40))
-                }
+        contentView.anchor(top: scrollView.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: CGSize(width: 0, height: calculateHeight()))
+        
+        var recentLabel: UILabel?
+        infoLabels.forEach { label in
+            contentView.addSubview(label)
+            if let recentLabel = recentLabel {
+                label.anchor(top: recentLabel.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 40))
+            } else {
+                label.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 40))
             }
-            recentView = view
+            recentLabel = label
         }
     }
     
