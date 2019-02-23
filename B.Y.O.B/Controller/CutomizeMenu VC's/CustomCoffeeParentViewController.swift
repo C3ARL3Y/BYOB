@@ -19,12 +19,9 @@ class CustomCoffeeParentViewController: UIViewController, CoffeeCreationProtocol
   
     var nextViewController: UIViewController = UIViewController()
     
-    var coffeeBases = [CoffeeBaseModel]()
-    
     let coffeeBaseTitle = UILabel().configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Placeholder TITLE"
-        $0.backgroundColor = .blue
         $0.textAlignment = .center
         $0.textColor = UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1)
     }
@@ -34,7 +31,6 @@ class CustomCoffeeParentViewController: UIViewController, CoffeeCreationProtocol
         $0.bounces = true
         $0.alwaysBounceVertical = true
         $0.alwaysBounceHorizontal = false
-        $0.backgroundColor = .red
     }
     
     let backButton = UIButton().configured {
@@ -96,26 +92,7 @@ class CustomCoffeeParentViewController: UIViewController, CoffeeCreationProtocol
     }
     
     @objc func handleNext() {
-        if true {
-            present(nextViewController, animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: "Please Select a Coffee Base", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                switch action.style{
-                case .default:
-                    print("default")
-                    
-                case .cancel:
-                    print("cancel")
-                    
-                case .destructive:
-                    print("destructive")
-                    
-                    
-                }}))
-            present(alert, animated: true, completion: nil)
-            
-        }
+        present(nextViewController, animated: true, completion: nil)
     }
     
     func setupDelegates() {

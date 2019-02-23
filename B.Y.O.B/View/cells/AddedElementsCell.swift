@@ -66,8 +66,8 @@ class AddedElementsCell: UITableViewCell {
         
         milkServingLabel.anchor(top: milkStepper.topAnchor, leading: milkStepper.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: -7, left: 30, bottom: 0, right: 0), size: CGSize(width: 50, height: 50))
         
-        
         var recentLabel: UILabel?
+        
         [titleLabel, caloriesLabel, proteinLabel, carbsLabel, fatsLabel, sugarLabel].forEach {
             if let recentLabel = recentLabel {
                 $0.anchor(top: recentLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: centerXAnchor, padding: UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 0), size: CGSize(width: 0, height: 50))

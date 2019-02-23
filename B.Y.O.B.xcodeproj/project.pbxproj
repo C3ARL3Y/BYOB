@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0920E69C221DE1820043B119 /* ViewDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */; };
 		0920E69E221DF9390043B119 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69D221DF9390043B119 /* UIImageExtension.swift */; };
+		0945BEC82221D29700529E31 /* MilkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BEC72221D29700529E31 /* MilkModel.swift */; };
+		0945BECA2221D4EF00529E31 /* SyrupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BEC92221D4EF00529E31 /* SyrupModel.swift */; };
+		0945BECC2221D9D700529E31 /* ExtraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BECB2221D9D700529E31 /* ExtraModel.swift */; };
 		094A37F9221B2D0E00DB2277 /* ViewBaristaPicksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A37F8221B2D0E00DB2277 /* ViewBaristaPicksViewController.swift */; };
 		094A37FB221B2DAF00DB2277 /* CreateBaristaPicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A37FA221B2DAF00DB2277 /* CreateBaristaPicsViewController.swift */; };
 		094A37FE221B2DEB00DB2277 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A37FD221B2DEB00DB2277 /* DrinkType.swift */; };
@@ -66,6 +69,9 @@
 		0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDrinkViewController.swift; sourceTree = "<group>"; };
 		0920E69D221DF9390043B119 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		09430F48AD3244D015571F6F /* Pods_B_Y_O_BUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_B_Y_O_BUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0945BEC72221D29700529E31 /* MilkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkModel.swift; sourceTree = "<group>"; };
+		0945BEC92221D4EF00529E31 /* SyrupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupModel.swift; sourceTree = "<group>"; };
+		0945BECB2221D9D700529E31 /* ExtraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraModel.swift; sourceTree = "<group>"; };
 		094A37F8221B2D0E00DB2277 /* ViewBaristaPicksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBaristaPicksViewController.swift; sourceTree = "<group>"; };
 		094A37FA221B2DAF00DB2277 /* CreateBaristaPicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBaristaPicsViewController.swift; sourceTree = "<group>"; };
 		094A37FD221B2DEB00DB2277 /* DrinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkType.swift; sourceTree = "<group>"; };
@@ -154,6 +160,9 @@
 				094A3801221B331600DB2277 /* FIRNutrientsModel.swift */,
 				094A37FF221B2EBD00DB2277 /* FIRDrinkModel.swift */,
 				09646CFD22208641007463CB /* CoffeeBaseModel.swift */,
+				0945BEC72221D29700529E31 /* MilkModel.swift */,
+				0945BEC92221D4EF00529E31 /* SyrupModel.swift */,
+				0945BECB2221D9D700529E31 /* ExtraModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -518,13 +527,16 @@
 				094A37FB221B2DAF00DB2277 /* CreateBaristaPicsViewController.swift in Sources */,
 				094A3808221B417500DB2277 /* UIColorExtension.swift in Sources */,
 				A559AE14220CCC7300154375 /* CustomCoffeeMilks.swift in Sources */,
+				0945BECC2221D9D700529E31 /* ExtraModel.swift in Sources */,
 				A559AE12220BDB6800154375 /* CustomCoffeeBase.swift in Sources */,
 				0920E69C221DE1820043B119 /* ViewDrinkViewController.swift in Sources */,
 				094A3804221B374A00DB2277 /* Configurable.swift in Sources */,
+				0945BEC82221D29700529E31 /* MilkModel.swift in Sources */,
 				094A380A221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift in Sources */,
 				A59ED65022012DB8002E1F19 /* AppDelegate.swift in Sources */,
 				0964C8D3221C7FCE0011B647 /* Animations.swift in Sources */,
 				0920E69E221DF9390043B119 /* UIImageExtension.swift in Sources */,
+				0945BECA2221D4EF00529E31 /* SyrupModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

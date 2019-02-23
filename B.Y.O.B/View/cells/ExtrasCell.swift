@@ -18,19 +18,22 @@ class ExtrasCell: UITableViewCell {
         $0.numberOfLines = 2
     }
     
-    let checkBox = UIButton().configured {
+    lazy var checkBox = UIButton().configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "UnCheckbox"), for: .normal)
         $0.setImage(UIImage(named: "Checkbox"), for: .selected)
         $0.addTarget(self, action: #selector(checkBoxPressed), for: .touchUpInside)
     }
+    var delegate: SelectedCheckBoxDelegate?
     
     @objc func checkBoxPressed() {
-        
+        checkBox.isSelected = true
+        delegate?.selected(cell: self)
     }
     
     func setupCell() {
         setupViews()
+        selectionStyle = .none 
     }
     
     private func setupViews() {

@@ -13,5 +13,5 @@ struct CoffeeBaseModel {
     // Calories in Drink
     let tall: Int
     let grande: Int
-    let Venti: Int
+    let venti: Int
 }
