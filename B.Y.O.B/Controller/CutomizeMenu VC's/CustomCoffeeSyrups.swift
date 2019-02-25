@@ -24,9 +24,9 @@ class CustomCoffeeSyrups: CustomCoffeeParentViewController {
         return label
     }()
     
-    var syrupModels = [SyrupModel(name: "Vanilla", calories: 1, protein: 0, carbs: 0.25, fat: 0, sugar: 0),
-                       SyrupModel(name: "Cinnamon Dolce", calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0)]
-    
+    var syrupModels = SyrupModel.getStaticModels()
+    //       SyrupType: Servings
+    var data = [String: Int]()
     override func viewDidLoad() {
         super.viewDidLoad()
         coffeeBaseTitle.text = "Syrups"
@@ -42,7 +42,10 @@ class CustomCoffeeSyrups: CustomCoffeeParentViewController {
     }
     
     override func tableViewRegisterCells() {
-        tableView.register(AddedElementsCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    override func handleSave() {
+        UserDefaults.standard.setValue(data, forKey: UDKeys.syrup.rawValue)
     }
 }
 
@@ -52,22 +55,32 @@ extension CustomCoffeeSyrups: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? AddedElementsCell {
-            let model = syrupModels[indexPath.row]
-            cell.titleLabel.text = model.name
-            cell.caloriesLabel.text = "Calories: \(model.calories)"
-            cell.proteinLabel.text = "Protein: \(model.protein)"
-            cell.carbsLabel.text = "Carbs: \(model.carbs)"
-            cell.fatsLabel.text = "Fats: \(model.fat)"
-            cell.fatsLabel.text = "Sugar: \(model.sugar)"
-            cell.setupCell()
-            return cell
+        let cell = SyrupCell()
+        let model = syrupModels[indexPath.row]
+        cell.delegate = self
+        cell.type = model.type
+        cell.titleLabel.text = model.name
+        cell.caloriesLabel.text = "Calories: \(model.calories)"
+        cell.proteinLabel.text = "Protein: \(model.protein)"
+        cell.carbsLabel.text = "Carbs: \(model.carbs)"
+        cell.fatsLabel.text = "Fats: \(model.fat)"
+        cell.fatsLabel.text = "Sugar: \(model.sugar)"
+        cell.setupCell()
+        if let value = data[cell.type.rawValue] {
+            cell.servingSizeLabel.text = "\(value)"
+            cell.stepper.value = Double(value)
         }
-        return UITableViewCell()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60 * 6
+    }
+}
+
+extension CustomCoffeeSyrups: SyrupCellDelegate {
+    func updated(value: Int, for syrupType: SyrupType) {
+        data.updateValue(value, forKey: syrupType.rawValue)
     }
 }
 

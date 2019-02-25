@@ -17,7 +17,9 @@ class ExtrasCell: UITableViewCell {
         $0.lineBreakMode = .byWordWrapping
         $0.numberOfLines = 2
     }
-    
+
+    var extraModel: ExtraModel!
+
     lazy var checkBox = UIButton().configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "UnCheckbox"), for: .normal)

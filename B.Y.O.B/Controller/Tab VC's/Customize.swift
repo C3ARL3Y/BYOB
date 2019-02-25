@@ -17,50 +17,7 @@ class Customize: UIViewController {
     //  edit order
     // reset order
     
-    // 0-1-2-3-4 pumps is how this will selected
-    var vanillaSyrupPumps = UserDefaults.standard.integer(forKey: "vanillaSyrupPumps")
-    var caramelSyrupPumps = UserDefaults.standard.integer(forKey: "caramelSyrupPumps")
-    var hazelnutSyrupPumps = UserDefaults.standard.integer(forKey: "hazelnutSyrupPumps")
-    var toffeeNutSyrupPumps = UserDefaults.standard.integer(forKey: "toffeeNutSyrupPumps")
-    var cinnamonDolceSyrupPumps = UserDefaults.standard.integer(forKey: "cinnamonDolceSyrupPumps")
-    var peppermintSyrupPumps = UserDefaults.standard.integer(forKey: "peppermintSyrupPumps")
-    var raspberrySyrupPumps = UserDefaults.standard.integer(forKey: "raspberrySyrupPumps")
-    var classicSyrupPumps = UserDefaults.standard.integer(forKey: "classicSyrupPumps")
-    var cascaraSyrupPumps = UserDefaults.standard.integer(forKey: "cascaraSyrupPumps")
-    var whiteMochaSyrupPumps = UserDefaults.standard.integer(forKey: "whiteMochaSyrupPumps")
-    var mochaSyrupPumps = UserDefaults.standard.integer(forKey: "mochaSyrupPumps")
-    var sugarFreeVanillaSyrupPumps = UserDefaults.standard.integer(forKey: "sugarFreeVanillaSyrupPumps")
-    var sugarFreeCinnamonDolceSyrupPumps = UserDefaults.standard.integer(forKey: "sugarFreeCinnamonDolceSyrupPumps")
-    var pumpkinSpiceSyrupPumps = UserDefaults.standard.integer(forKey: "pumpkinSpiceSyrupPumps")
-    var gingerbreadSyrupPumps = UserDefaults.standard.integer(forKey: "gingerbreadSyrupPumps")
-    var caramelBruleeSyrupPumps = UserDefaults.standard.integer(forKey: "caramelBruleeSyrupPumps")
-    var toastedWhiteMochaSyrupPumps = UserDefaults.standard.integer(forKey: "toastedWhiteMochaSyrupPumps")
-    
-    // 0-1-2-3 none-light-normal-extra is how this will be served
-    var lightCaramelDrizzleServing = UserDefaults.standard.integer(forKey: "lightCaramelDrizzleServing")
-    var lightMochaDrizzleServing = UserDefaults.standard.integer(forKey: "lightMochaDrizzleServing")
-    var cinnamonPowderServing = UserDefaults.standard.integer(forKey: "cinnamonPowderServing")
-    var sugarFreeColdFoamServing = UserDefaults.standard.integer(forKey: "sugarFreeColdFoamServing")
-    
-    var wholeMilkServing = UserDefaults.standard.integer(forKey: "wholeMilkServing")
-    var twoPercentMilkServing = UserDefaults.standard.integer(forKey: "twoPercentMilkServing")
-    var onePercentMilkServing = UserDefaults.standard.integer(forKey: "onePercentMilkServing")
-    var nonFatSkimMilkServing = UserDefaults.standard.integer(forKey: "nonFatSkimMilkServing")
-    var halfAndHalfServing = UserDefaults.standard.integer(forKey: "halfAndHalfServing")
-    var heavyCreamServing = UserDefaults.standard.integer(forKey: "heavyCreamServing")
-    var coconutMilkServing = UserDefaults.standard.integer(forKey: "coconutMilkServing")
-    var  almondMilkServing = UserDefaults.standard.integer(forKey: "almondMilkServing")
-    var soyMilkServing = UserDefaults.standard.integer(forKey: "soyMilkServing")
-    
-    // base drinks
-    var coffeeBase = UserDefaults.standard.string(forKey: "coffeeBase")
-    
-    //variables to check for the blank menu
-    var noSyrups = UserDefaults.standard.bool(forKey: "noSyrups")
-    var noExtras = UserDefaults.standard.bool(forKey: "noExtras")
-    var noMilks = UserDefaults.standard.bool(forKey: "noMilks")
-    var noCoffeeBase = UserDefaults.standard.bool(forKey: "noCoffeeBase")
-    
+   
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
         
@@ -115,12 +72,7 @@ class Customize: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        determineCoffeeBase()
-        determineMilks()
-        determineExtras()
-        determineSyrups()
-        
+        loadCustomDrink()
         setupView()
         setupScrollView()
     }
@@ -158,7 +110,7 @@ class Customize: UIViewController {
         yourDrinkLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
         yourDrinkLabel.font = UIFont.boldSystemFont(ofSize: view.frame.width * 0.075)
         
-        if noCoffeeBase == true && noSyrups == true && noMilks == true && noExtras == true {
+        if true {
             scrollView.addSubview(beginOrderButton)
             
             beginOrderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -177,10 +129,31 @@ class Customize: UIViewController {
         
     }
 
-    @objc func handleBeginDrink() {
-        self.present(CustomCoffeeBase(), animated: true) {
-            
+    private func loadCustomDrink() {
+        let standard = UserDefaults.standard
+        for key in UDKeys.allCases {
+            let key = key.rawValue
+            if standard.value(forKey: key) != nil {
+                // Has data
+                if let stringValue = standard.value(forKey: key) as? String {
+                    if let coffeeBase = CoffeeBaseType.init(rawValue: stringValue) {
+                        print(coffeeBase)
+                    } else if let extras = ExtraType.init(rawValue: stringValue) {
+                        print(extras)
+                    }
+                }
+                
+                if let dict = standard.value(forKey: key) as? [String: Int] {
+                    print(dict)
+                }
+                
+            }
         }
+    }
+    
+    @objc func handleBeginDrink() {
+        handleReset()
+        present(CustomCoffeeBase(), animated: true)
     }
     
     @objc func handleEditDrink() {
@@ -188,191 +161,7 @@ class Customize: UIViewController {
     }
     
     @objc func handleReset() {
-        noCoffeeBase = true
-        UserDefaults.standard.set(true, forKey: "noCoffeeBase")
-        noMilks = true
-        UserDefaults.standard.set(true, forKey: "noMilks")
-        noExtras = true
-        UserDefaults.standard.set(true, forKey: "noExtras")
-        noSyrups = true
-        UserDefaults.standard.set(true, forKey: "noSyrups")
-        
-        coffeeBase = nil
-        UserDefaults.standard.setNilValueForKey("coffeeBase")
-        wholeMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "wholeMilkServing")
-        twoPercentMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "twoPercentMilkServing")
-        onePercentMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "onePercentMilkServing")
-        nonFatSkimMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "nonFatSkimMilkServing")
-        halfAndHalfServing = 0
-        UserDefaults.standard.set(0, forKey: "halfAndHalfServing")
-        heavyCreamServing = 0
-        UserDefaults.standard.set(0, forKey: "heavyCreamServing")
-        coconutMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "cocnutMilkServing")
-        almondMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "almondMilkServing")
-        soyMilkServing = 0
-        UserDefaults.standard.set(0, forKey: "soyMilkServing")
-        vanillaSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "vanillaSyrupPumps")
-        caramelSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "caramelSyrupPumps")
-        hazelnutSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "hazelnutSyrupPumps")
-        toffeeNutSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "toffeeNutSyrupPumps")
-        cinnamonDolceSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "cinnamonDolceSyrupPumps")
-        peppermintSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "peppermintSyrupPumps")
-        raspberrySyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "rasberrySyrupPumps")
-        classicSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "classicSyrupPumps")
-        whiteMochaSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "whiteMochaSyrupPumps")
-        mochaSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "mochaSyrupPumps")
-        sugarFreeVanillaSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "sugarFreeVanillaSyrupPumps")
-        sugarFreeCinnamonDolceSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "sugarFreeCinnamonDolceSyrupPumps")
-        pumpkinSpiceSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "pumpkinSpiceSyrupPumps")
-        gingerbreadSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "gingerbreadSyrupPumps")
-        caramelBruleeSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "caramelDrileeSyrupPumps")
-        toastedWhiteMochaSyrupPumps = 0
-        UserDefaults.standard.set(0, forKey: "toastedWhiteMochaSyrupPumps")
-        lightCaramelDrizzleServing = 0
-        UserDefaults.standard.set(0, forKey: "lightCaramelDrizzleServing")
-        lightMochaDrizzleServing = 0
-        UserDefaults.standard.set(0, forKey: "lightMochaDrizzleServing")
-        cinnamonPowderServing = 0
-        UserDefaults.standard.set(0, forKey: "cinnamonPowderServing")
-        sugarFreeColdFoamServing = 0
-        UserDefaults.standard.set(0, forKey: "sugarFreeColdFoamServing")
-        
         UserDefaults.standard.synchronize()
-        
         // remove anything that need to be and then add in the begin drink button
     }
-    
-    func determineCoffeeBase() {
-        if coffeeBase == "hotCoffee" {
-            
-        } else if coffeeBase == "americanoIced" {
-            
-        } else if coffeeBase == "americanoHot" {
-            
-        } else if coffeeBase == "icedCoffee" {
-            
-        } else if coffeeBase == "coldBrew" {
-            
-        } else if coffeeBase == "greenIcedTea" {
-            
-        } else if coffeeBase == "whiteIcedTea" {
-            
-        } else if coffeeBase == "blackIcedTea" {
-            
-        } else if coffeeBase == "passionTangoTea" {
-            
-        } else if coffeeBase == nil {
-            noCoffeeBase = true
-            UserDefaults.standard.set(true, forKey: "noCoffeeBase")
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    func determineMilks() {
-        if wholeMilkServing != 0 {
-            
-        } else if twoPercentMilkServing != 0 {
-            
-        } else if onePercentMilkServing != 0 {
-            
-        } else if nonFatSkimMilkServing != 0 {
-            
-        } else if halfAndHalfServing != 0 {
-            
-        } else if heavyCreamServing != 0 {
-            
-        } else if coconutMilkServing != 0 {
-            
-        } else if almondMilkServing != 0 {
-            
-        } else if soyMilkServing != 0 {
-            
-        } else {
-            noMilks = true
-            UserDefaults.standard.set(true, forKey: "noMilks")
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    func determineSyrups() {
-        if vanillaSyrupPumps != 0 {
-            
-        } else if caramelSyrupPumps != 0 {
-            
-        } else if hazelnutSyrupPumps != 0 {
-            
-        } else if toffeeNutSyrupPumps != 0 {
-            
-        } else if cinnamonDolceSyrupPumps != 0 {
-            
-        } else if peppermintSyrupPumps != 0 {
-            
-        } else if raspberrySyrupPumps != 0 {
-            
-        } else if classicSyrupPumps != 0 {
-            
-        } else if cascaraSyrupPumps != 0 {
-            
-        } else if whiteMochaSyrupPumps != 0 {
-            
-        } else if mochaSyrupPumps != 0 {
-            
-        } else if sugarFreeVanillaSyrupPumps != 0 {
-            
-        } else if sugarFreeCinnamonDolceSyrupPumps != 0 {
-            
-        } else if pumpkinSpiceSyrupPumps != 0 {
-            
-        } else if gingerbreadSyrupPumps != 0 {
-            
-        } else if caramelSyrupPumps != 0 {
-            
-        } else if caramelBruleeSyrupPumps != 0 {
-            
-        } else if toastedWhiteMochaSyrupPumps != 0 {
-            
-        } else {
-            noSyrups = true
-            UserDefaults.standard.set(true, forKey: "noSyrups")
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    func determineExtras() {
-        if lightCaramelDrizzleServing != 0 {
-            
-        } else if lightMochaDrizzleServing != 0 {
-            
-        } else if cinnamonPowderServing != 0 {
-            
-        } else if sugarFreeColdFoamServing != 0 {
-            
-        } else {
-            noExtras = true
-            UserDefaults.standard.set(true, forKey: "noExtras")
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
 }
