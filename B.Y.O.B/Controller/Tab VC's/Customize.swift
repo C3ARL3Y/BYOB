@@ -10,14 +10,18 @@ import UIKit
 
 class Customize: UIViewController {
     
-    // logo | Customize Logo
     // Your order label
     // order details and Nutrition details
     // Start your custom drink
     //  edit order
     // reset order
     
-   
+    var drinkModel: UDDrinkModel? {
+        didSet {
+          updateUIWithModel()
+        }
+    }
+    
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
         
@@ -27,7 +31,7 @@ class Customize: UIViewController {
     }()
     
     let logo: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "BYOBLogo")
@@ -46,7 +50,7 @@ class Customize: UIViewController {
     }()
     
     let yourDrinkLabel: UILabel = {
-      let label = UILabel()
+        let label = UILabel()
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Your Custom Drink"
@@ -57,7 +61,7 @@ class Customize: UIViewController {
     }()
     
     let beginOrderButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Tap To Begin Customizing Your Drink!", for: UIControl.State.normal)
@@ -72,9 +76,12 @@ class Customize: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadCustomDrink()
         setupView()
         setupScrollView()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadCustomDrink()
     }
     
     private func setupView() {
@@ -128,28 +135,54 @@ class Customize: UIViewController {
         }
         
     }
-
+    
+    func updateUIWithModel() {
+        
+    }
+    
     private func loadCustomDrink() {
         let standard = UserDefaults.standard
+        
+        let uid = UUID()
+        var baseType: CoffeeBaseType!
+        var milkServings = [MilkType: Int]()
+        var syrupServings = [SyrupType: Int]()
+        var extraType: ExtraType = .empty
+        
         for key in UDKeys.allCases {
-            let key = key.rawValue
-            if standard.value(forKey: key) != nil {
+            let stringKey = key.rawValue
+            if standard.value(forKey: stringKey) != nil {
                 // Has data
-                if let stringValue = standard.value(forKey: key) as? String {
+                if let stringValue = standard.value(forKey: stringKey) as? String {
                     if let coffeeBase = CoffeeBaseType.init(rawValue: stringValue) {
-                        print(coffeeBase)
+                        baseType = coffeeBase
                     } else if let extras = ExtraType.init(rawValue: stringValue) {
-                        print(extras)
+                        extraType = extras
+                    } else {
+                        
                     }
                 }
                 
-                if let dict = standard.value(forKey: key) as? [String: Int] {
-                    print(dict)
+                if let dict = standard.value(forKey: stringKey) as? [String: Int] {
+                    for (stringValue, numberOfServings) in dict {
+                        if let type = MilkType.init(rawValue: stringValue) {
+                            milkServings.updateValue(numberOfServings, forKey: type)
+                        } else if let type = SyrupType.init(rawValue: stringValue) {
+                            syrupServings.updateValue(numberOfServings, forKey: type)
+                        }
+                    }
                 }
-                
             }
         }
+
+        // Change UI depending on if there is data
+        // What happends when you select the drink?
+        let drinkModel = UDDrinkModel(uid: uid, baseType: baseType, milkServings: milkServings, syrupServings: syrupServings, extraType: extraType)
+        print(drinkModel)
+        
     }
+    
+    
     
     @objc func handleBeginDrink() {
         handleReset()
@@ -161,7 +194,9 @@ class Customize: UIViewController {
     }
     
     @objc func handleReset() {
-        UserDefaults.standard.synchronize()
         // remove anything that need to be and then add in the begin drink button
+        for key in UDKeys.allCases {
+            UserDefaults.standard.removeObject(forKey: key.rawValue)
+        }
     }
 }

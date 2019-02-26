@@ -51,5 +51,4 @@ enum SyrupType: String, CaseIterable {
     case ginger_bread
     case caramel_brulee
     case toasted_white_mocha
-    // Non dair milk and so on
 }

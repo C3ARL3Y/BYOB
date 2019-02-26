@@ -23,13 +23,15 @@ enum ExtraType: String, CaseIterable {
     case light_mocha_drizzle
     case cinnamon_powder
     case suger_free_cold_foam
+    case empty
 }
 
 
 extension ExtraModel {
     static func getStaticModels() -> [ExtraModel] {
         var result = [ExtraModel]()
-        for type in ExtraType.allCases {
+        // remove empty from get static models
+        for type in ExtraType.allCases.dropLast() {
             result.append(getStaticModel(of: type))
         }
         return result
@@ -45,6 +47,8 @@ extension ExtraModel {
             return ExtraModel(name: "Cinnamon Powder", calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0, type: type)
         case .suger_free_cold_foam:
             return ExtraModel(name: "Sugar Free Cold Foam", calories: 12, protein: 1, carbs: 2, fat: 0, sugar: 1, type: type)
+        case .empty:
+            return ExtraModel(name: "empty", calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0, type: type)
         }
     }
     

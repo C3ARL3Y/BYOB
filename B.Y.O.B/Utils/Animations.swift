@@ -28,7 +28,6 @@ struct Animations {
         }
     }
     
-    
     static func move(view: UIView, x: CGFloat, y: CGFloat) {
         UIView.animate(withDuration: 1.0) {
             view.transform = CGAffineTransform.init(translationX: x, y: y)

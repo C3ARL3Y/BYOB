@@ -12,7 +12,6 @@ protocol SyrupCellDelegate: class {
     func updated(value: Int, for syrupType: SyrupType)
 }
 
-
 final class SyrupCell: AddedElementsCell {
     
     var type: SyrupType!

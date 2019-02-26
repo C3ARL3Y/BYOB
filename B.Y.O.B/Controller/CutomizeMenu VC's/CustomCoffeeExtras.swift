@@ -44,7 +44,7 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
         
         if selectedCell != nil {
             handleSave()
-            present(nextViewController, animated: true, completion: nil)
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Please Select an Extra", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

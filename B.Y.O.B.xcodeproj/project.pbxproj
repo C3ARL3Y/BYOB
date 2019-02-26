@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0920E69C221DE1820043B119 /* ViewDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */; };
 		0920E69E221DF9390043B119 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69D221DF9390043B119 /* UIImageExtension.swift */; };
+		0926C83C2224C35C0093A68E /* UDDrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0926C83B2224C35C0093A68E /* UDDrinkModel.swift */; };
 		0945BEC82221D29700529E31 /* MilkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BEC72221D29700529E31 /* MilkModel.swift */; };
 		0945BECA2221D4EF00529E31 /* SyrupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BEC92221D4EF00529E31 /* SyrupModel.swift */; };
 		0945BECC2221D9D700529E31 /* ExtraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BECB2221D9D700529E31 /* ExtraModel.swift */; };
@@ -71,6 +72,7 @@
 /* Begin PBXFileReference section */
 		0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDrinkViewController.swift; sourceTree = "<group>"; };
 		0920E69D221DF9390043B119 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		0926C83B2224C35C0093A68E /* UDDrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDDrinkModel.swift; sourceTree = "<group>"; };
 		09430F48AD3244D015571F6F /* Pods_B_Y_O_BUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_B_Y_O_BUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0945BEC72221D29700529E31 /* MilkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkModel.swift; sourceTree = "<group>"; };
 		0945BEC92221D4EF00529E31 /* SyrupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupModel.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				0945BEC72221D29700529E31 /* MilkModel.swift */,
 				0945BEC92221D4EF00529E31 /* SyrupModel.swift */,
 				0945BECB2221D9D700529E31 /* ExtraModel.swift */,
+				0926C83B2224C35C0093A68E /* UDDrinkModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				A53BB2932208BD2700F5ADBB /* Customize.swift in Sources */,
 				09646D042220A684007463CB /* InfoLabel.swift in Sources */,
 				A53BB2912208B61B00F5ADBB /* BaristaPicks.swift in Sources */,
+				0926C83C2224C35C0093A68E /* UDDrinkModel.swift in Sources */,
 				094A37F9221B2D0E00DB2277 /* ViewBaristaPicksViewController.swift in Sources */,
 				A5907433221364A60076E4A0 /* CustomCoffeeExtras.swift in Sources */,
 				A53BB2972208D55600F5ADBB /* AlexMoe.swift in Sources */,

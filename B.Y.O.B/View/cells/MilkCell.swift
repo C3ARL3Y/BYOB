@@ -13,7 +13,6 @@ protocol MilkCellDelegate: class {
     func updated(value: Int, for milkType: MilkType)
 }
 
-
 final class MilkCell: AddedElementsCell {
     
     var type: MilkType!
