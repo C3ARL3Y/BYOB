@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class ViewBaristaPicsViewController: UIViewController {
     
     var drinksType: DrinkType!
@@ -43,9 +43,13 @@ class ViewBaristaPicsViewController: UIViewController {
         view.backgroundColor = .tanBG
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchDrinks()
+        
+        if Auth.auth().currentUser == nil {
+            createDrinkButton.isHidden = true
+        }
     }
     
     func fetchDrinks() {

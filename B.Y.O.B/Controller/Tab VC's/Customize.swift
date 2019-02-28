@@ -10,23 +10,18 @@ import UIKit
 
 class Customize: UIViewController {
     
-    // Your order label
-    // order details and Nutrition details
-    // Start your custom drink
-    //  edit order
-    // reset order
-    
     var drinkModel: UDDrinkModel? {
         didSet {
-          updateUIWithModel()
+            updateUIWithModel()
         }
     }
     
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
-        
+        sv.bounces = true
+        sv.alwaysBounceVertical = true
+        sv.alwaysBounceHorizontal = false
         sv.translatesAutoresizingMaskIntoConstraints = false
-        
         return sv
     }()
     
@@ -108,12 +103,21 @@ class Customize: UIViewController {
                     UserDefaults.standard.setValue(data, forKey: UDKeys.favDrinks.rawValue + "\(i)")
                     set = false
                     self.drinkModel = nil
+                    self.deleteData()
                 }
             }
         }))
         
         self.present(alert, animated: false)
-        
+    }
+    
+    func deleteData() {
+        for key in UDKeys.allCases {
+            if key != .favDrinks {
+                let string = key.rawValue
+                UserDefaults.standard.removeObject(forKey: string)
+            }
+        }
     }
     
     private func setupView() {
@@ -151,28 +155,17 @@ class Customize: UIViewController {
         yourDrinkLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
         yourDrinkLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
         
-        if true {
-            scrollView.addSubview(beginOrderButton)
-            
-            beginOrderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            beginOrderButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: (view.frame.height * 0.125)).isActive = true
-            beginOrderButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive = true
-            beginOrderButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
-            beginOrderButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: view.frame.width * 0.065)
-            
-        } else {
-            // add in the reset and edit order buttons
-            // also add in the order labels
-            scrollView.bounces = true
-            scrollView.alwaysBounceVertical = true
-            scrollView.alwaysBounceHorizontal = false
-        }
+        scrollView.addSubview(beginOrderButton)
         
+        beginOrderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        beginOrderButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: (view.frame.height * 0.125)).isActive = true
+        beginOrderButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive = true
+        beginOrderButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
+        beginOrderButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: view.frame.width * 0.065)
     }
     
     func updateUIWithModel() {
-        yourDrinkLabel.text = drinkModel != nil ? "Override Current Drink OR Save Current Drink To Favorites Forever!" : ""
-        
+        yourDrinkLabel.text = drinkModel != nil ? "DRINK CREATED, SAVE IT TO FAVORITES FOREVER" : ""
     }
     
     private func loadCustomDrink() {
@@ -210,7 +203,7 @@ class Customize: UIViewController {
                 }
             }
         }
-
+        
         // Change UI depending on if there is data
         // What happends when you select the drink?
         if let baseType = baseType {
@@ -218,8 +211,6 @@ class Customize: UIViewController {
             self.drinkModel = drinkModel
         }
     }
-    
-    
     
     @objc func handleBeginDrink() {
         handleReset()

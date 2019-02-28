@@ -10,4 +10,5 @@ target 'B.Y.O.B' do
     pod 'Firebase/Database'
     pod 'Firebase/Storage'
     pod 'Firebase/Core'
+    pod 'Firebase/Auth'
 end

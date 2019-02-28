@@ -32,8 +32,7 @@ final class FavoriteDrinkViewerViewController: UIViewController {
         $0.titleLabel?.textAlignment = .center
         $0.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
     }
-    
-    
+
     //Possibility of using variable keys to define new infoviews
     let baseDrinkInfoView = InfoView()
     let milkInfoView = InfoView()
@@ -70,7 +69,6 @@ final class FavoriteDrinkViewerViewController: UIViewController {
         var carbs: Float = 0
         var sugar: Float = 0
         
-        
         // data to UI
         titleLabel.text = drink.name
         let spacer = " - "
@@ -103,8 +101,6 @@ final class FavoriteDrinkViewerViewController: UIViewController {
         extraInfoView.addInfo(with: extraModel.name)
         
         // calculations for nutritional facts for
-        
-        
         tallInfoView.setTitle(with: "Tall")
         grandeInfoView.setTitle(with: "Grande")
         ventiInfoView.setTitle(with: "Venti")
