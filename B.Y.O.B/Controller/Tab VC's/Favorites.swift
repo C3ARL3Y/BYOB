@@ -80,4 +80,5 @@ extension Favorites: UITableViewDataSource {
         cell.textLabel?.textColor = .tanTitle
         return cell
     }
+    
 }

@@ -63,11 +63,21 @@ final class CreateBaristaPicksViewController: UIViewController {
         $0.clipsToBounds = true
     }
     
+    lazy var backButton = UIButton(type: .system).configured {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .tanTitle
+        $0.setTitleColor(.tanBG, for: .normal)
+        $0.setTitle("Back", for: .normal)
+        $0.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
+    }
+    
     lazy var saveDrinkButton = UIButton(type: .system).configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .tanTitle
         $0.setTitleColor(.tanBG, for: .normal)
-        $0.setTitle("Save Drink", for: .normal)
+        $0.setTitle("Save", for: .normal)
         $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
         $0.addTarget(self, action: #selector(saveDrinkButtonPressed), for: .touchUpInside)
@@ -102,6 +112,7 @@ final class CreateBaristaPicksViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .tanBG
         setupViews()
+        
     }
     
     @objc func saveDrinkButtonPressed() {
@@ -144,6 +155,10 @@ final class CreateBaristaPicksViewController: UIViewController {
         descriptionTextView.resignFirstResponder()
     }
     
+    @objc func backButtonPressed() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func setupViews() {
         view.addSubview(nameTextField)
         view.addSubview(imagePickerButton)
@@ -151,7 +166,7 @@ final class CreateBaristaPicksViewController: UIViewController {
         view.addSubview(nutrientsButton)
         view.addSubview(orderSteps)
         view.addSubview(saveDrinkButton)
-        
+        view.addSubview(backButton)
         nameTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 60))
         
         imagePickerButton.anchor(top: nameTextField.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size:CGSize(width: 200, height: 200))
@@ -163,7 +178,11 @@ final class CreateBaristaPicksViewController: UIViewController {
         
         orderSteps.anchor(top: descriptionTextView.bottomAnchor, leading: nil, bottom: nil, trailing: descriptionTextView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 60))
         
-        saveDrinkButton.anchor(top: nil, leading: descriptionTextView.leadingAnchor, bottom: view.bottomAnchor, trailing: descriptionTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0), size: CGSize(width: 0, height: 60))
+        saveDrinkButton.anchor(top: orderSteps.bottomAnchor, leading: nil, bottom: nil, trailing: descriptionTextView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 60))
+        
+      
+        backButton.anchor(top: nutrientsButton.bottomAnchor, leading: descriptionTextView.leadingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 60))
+        
     }
 }
 
