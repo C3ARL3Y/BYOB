@@ -48,9 +48,6 @@ class ViewBaristaPicsViewController: UIViewController {
         fetchDrinks()
     }
     
-    // add ability to edit previous drinks
-    // Delete drinks
-    
     func fetchDrinks() {
         drinks.removeAll()
         FirebaseService.fetchDrinks(of: drinksType) { [weak self] (model) in
@@ -115,7 +112,7 @@ extension ViewBaristaPicsViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let drink = drinks[indexPath.row]
-        present(ViewDrinkViewController().configured {
+        present(ViewBaristaPicksDrinkViewController().configured {
             $0.drink = drink
         }, animated: true, completion: nil)
     }

@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0920E69C221DE1820043B119 /* ViewDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */; };
+		0920E69C221DE1820043B119 /* ViewBaristaPicksDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69B221DE1820043B119 /* ViewBaristaPicksDrinkViewController.swift */; };
 		0920E69E221DF9390043B119 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920E69D221DF9390043B119 /* UIImageExtension.swift */; };
 		0926C83C2224C35C0093A68E /* UDDrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0926C83B2224C35C0093A68E /* UDDrinkModel.swift */; };
+		093FB2F82226FADF0036A8CF /* FavoriteDrinkViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093FB2F72226FADF0036A8CF /* FavoriteDrinkViewerViewController.swift */; };
 		0945BEC82221D29700529E31 /* MilkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BEC72221D29700529E31 /* MilkModel.swift */; };
 		0945BECA2221D4EF00529E31 /* SyrupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BEC92221D4EF00529E31 /* SyrupModel.swift */; };
 		0945BECC2221D9D700529E31 /* ExtraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0945BECB2221D9D700529E31 /* ExtraModel.swift */; };
@@ -22,6 +23,7 @@
 		094A3806221B376F00DB2277 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A3805221B376F00DB2277 /* UIViewExtension.swift */; };
 		094A3808221B417500DB2277 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A3807221B417500DB2277 /* UIColorExtension.swift */; };
 		094A380A221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A3809221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift */; };
+		094A41FD22276B770035F8E3 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A41FC22276B770035F8E3 /* InfoView.swift */; };
 		09646CFC22208616007463CB /* CoffeeBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09646CFB22208616007463CB /* CoffeeBaseCell.swift */; };
 		09646CFE22208641007463CB /* CoffeeBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09646CFD22208641007463CB /* CoffeeBaseModel.swift */; };
 		09646D002220A440007463CB /* CustomCoffeeParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09646CFF2220A440007463CB /* CustomCoffeeParentViewController.swift */; };
@@ -70,9 +72,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDrinkViewController.swift; sourceTree = "<group>"; };
+		0920E69B221DE1820043B119 /* ViewBaristaPicksDrinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBaristaPicksDrinkViewController.swift; sourceTree = "<group>"; };
 		0920E69D221DF9390043B119 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		0926C83B2224C35C0093A68E /* UDDrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDDrinkModel.swift; sourceTree = "<group>"; };
+		093FB2F72226FADF0036A8CF /* FavoriteDrinkViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDrinkViewerViewController.swift; sourceTree = "<group>"; };
 		09430F48AD3244D015571F6F /* Pods_B_Y_O_BUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_B_Y_O_BUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0945BEC72221D29700529E31 /* MilkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkModel.swift; sourceTree = "<group>"; };
 		0945BEC92221D4EF00529E31 /* SyrupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyrupModel.swift; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 		094A3805221B376F00DB2277 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		094A3807221B417500DB2277 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		094A3809221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsBaristaPicksViewController.swift; sourceTree = "<group>"; };
+		094A41FC22276B770035F8E3 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		09646CFB22208616007463CB /* CoffeeBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeBaseCell.swift; sourceTree = "<group>"; };
 		09646CFD22208641007463CB /* CoffeeBaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeBaseModel.swift; sourceTree = "<group>"; };
 		09646CFF2220A440007463CB /* CustomCoffeeParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCoffeeParentViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 			children = (
 				09646D052220A7A4007463CB /* cells */,
 				09646D032220A684007463CB /* InfoLabel.swift */,
+				094A41FC22276B770035F8E3 /* InfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -192,7 +197,7 @@
 				094A37FA221B2DAF00DB2277 /* CreateBaristaPicsViewController.swift */,
 				094A3809221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift */,
 				09EBBEC6221BA8DA00FEF1D0 /* StepsBaristPicksViewController.swift */,
-				0920E69B221DE1820043B119 /* ViewDrinkViewController.swift */,
+				0920E69B221DE1820043B119 /* ViewBaristaPicksDrinkViewController.swift */,
 			);
 			name = "Barista Picks VC's";
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				A53BB2922208BD2700F5ADBB /* Customize.swift */,
 				A53BB2942208D51E00F5ADBB /* Favorites.swift */,
 				A53BB2962208D55600F5ADBB /* AlexMoe.swift */,
+				093FB2F72226FADF0036A8CF /* FavoriteDrinkViewerViewController.swift */,
 			);
 			path = "Tab VC's";
 			sourceTree = "<group>";
@@ -541,11 +547,13 @@
 				A53BB2952208D51E00F5ADBB /* Favorites.swift in Sources */,
 				094A37FB221B2DAF00DB2277 /* CreateBaristaPicsViewController.swift in Sources */,
 				094A3808221B417500DB2277 /* UIColorExtension.swift in Sources */,
+				093FB2F82226FADF0036A8CF /* FavoriteDrinkViewerViewController.swift in Sources */,
 				A559AE14220CCC7300154375 /* CustomCoffeeMilks.swift in Sources */,
 				0945BECC2221D9D700529E31 /* ExtraModel.swift in Sources */,
 				A559AE12220BDB6800154375 /* CustomCoffeeBase.swift in Sources */,
-				0920E69C221DE1820043B119 /* ViewDrinkViewController.swift in Sources */,
+				0920E69C221DE1820043B119 /* ViewBaristaPicksDrinkViewController.swift in Sources */,
 				094A3804221B374A00DB2277 /* Configurable.swift in Sources */,
+				094A41FD22276B770035F8E3 /* InfoView.swift in Sources */,
 				09C0AE7A2224836E00DFE033 /* MilkCell.swift in Sources */,
 				0945BEC82221D29700529E31 /* MilkModel.swift in Sources */,
 				094A380A221B45E800DB2277 /* NutrientsBaristaPicksViewController.swift in Sources */,

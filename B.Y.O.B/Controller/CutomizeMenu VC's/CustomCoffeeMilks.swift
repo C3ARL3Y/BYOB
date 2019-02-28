@@ -59,11 +59,11 @@ extension CustomCoffeeMilks: UITableViewDelegate, UITableViewDataSource {
         let model = milkModels[indexPath.row]
         cell.type = model.type
         cell.titleLabel.text = model.name
-        cell.caloriesLabel.text = "Calories: \(model.caloriesPer2oz)"
-        cell.proteinLabel.text = "Protein: \(model.protein)"
-        cell.carbsLabel.text = "Carbs: \(model.carbs)"
-        cell.fatsLabel.text = "Fats: \(model.fat)"
-        cell.fatsLabel.text = "Sugar: \(model.sugar)"
+        cell.caloriesLabel.text = "Calories: \(model.caloriesPer2oz)g"
+        cell.proteinLabel.text = "Protein: \(model.protein)g"
+        cell.carbsLabel.text = "Carbs: \(model.carbs)g"
+        cell.fatsLabel.text = "Fats: \(model.fat)g"
+        cell.fatsLabel.text = "Sugar: \(model.sugar)g"
         cell.delegate = self
         if let value = data[cell.type.rawValue] {
             cell.servingSizeLabel.text = "\(value)"
