@@ -12,4 +12,5 @@ enum UDKeys: String, CaseIterable {
     case milk = "milk"
     case syrup = "syrup"
     case extras = "extras"
+    case favDrinks = "favoriteDrinks"
 }

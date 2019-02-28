@@ -9,7 +9,7 @@
 
 import UIKit
 
-class ViewDrinkViewController: UIViewController {
+class ViewBaristaPicksDrinkViewController: UIViewController {
     
     var drink: FIRDrinkModel!
     

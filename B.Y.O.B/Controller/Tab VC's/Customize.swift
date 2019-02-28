@@ -51,12 +51,12 @@ class Customize: UIViewController {
     
     let yourDrinkLabel: UILabel = {
         let label = UILabel()
-        
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Your Custom Drink"
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
+        label.text = ""
         label.textColor = UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1)
         label.textAlignment = .center
-        
         return label
     }()
     
@@ -64,7 +64,7 @@ class Customize: UIViewController {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Tap To Begin Customizing Your Drink!", for: UIControl.State.normal)
+        button.setTitle("Tap To Begin Customizing Your Next Drink!", for: UIControl.State.normal)
         button.setTitleColor(UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1), for: UIControl.State.normal)
         button.titleLabel?.lineBreakMode = .byCharWrapping
         button.titleLabel?.numberOfLines = 0
@@ -84,9 +84,44 @@ class Customize: UIViewController {
         loadCustomDrink()
     }
     
+    @objc func favoriteButtonPressed() {
+        // add drink to favorites
+        guard let _ = drinkModel else {
+            return
+        }
+        
+        let alert = UIAlertController(title: "", message: "Set Drink Name", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "name..."
+        })
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (updateAction) in
+            self.drinkModel?.name = alert.textFields?.first?.text
+            
+            let data = self.drinkModel?.convertToData()
+            var set = true
+            var i = 0
+            // Loop till the last savedDrink has been iterated through
+            while set {
+                if let _ = UserDefaults.standard.value(forKey: UDKeys.favDrinks.rawValue + "\(i)") as? [String: Any] {
+                    i+=1
+                } else {
+                    UserDefaults.standard.setValue(data, forKey: UDKeys.favDrinks.rawValue + "\(i)")
+                    set = false
+                    self.drinkModel = nil
+                }
+            }
+        }))
+        
+        self.present(alert, animated: false)
+        
+    }
+    
     private func setupView() {
         view.backgroundColor = UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1)
         navigationItem.title = "Customize"
+        let button = UIBarButtonItem(image: UIImage(named: "FavoritesButtonImg"), style: UIBarButtonItem.Style.done, target: self, action: #selector(favoriteButtonPressed))
+        button.tintColor = .red
+        navigationItem.setRightBarButton(button, animated: true)
         
         view.addSubview(scrollView)
         
@@ -115,7 +150,6 @@ class Customize: UIViewController {
         yourDrinkLabel.topAnchor.constraint(equalTo: customizeLabel.bottomAnchor, constant: view.frame.height * 0.05).isActive = true
         yourDrinkLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
         yourDrinkLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
-        yourDrinkLabel.font = UIFont.boldSystemFont(ofSize: view.frame.width * 0.075)
         
         if true {
             scrollView.addSubview(beginOrderButton)
@@ -137,6 +171,7 @@ class Customize: UIViewController {
     }
     
     func updateUIWithModel() {
+        yourDrinkLabel.text = drinkModel != nil ? "Override Current Drink OR Save Current Drink To Favorites Forever!" : ""
         
     }
     
@@ -144,10 +179,11 @@ class Customize: UIViewController {
         let standard = UserDefaults.standard
         
         let uid = UUID()
-        var baseType: CoffeeBaseType!
+        var baseType: CoffeeBaseType?
         var milkServings = [MilkType: Int]()
         var syrupServings = [SyrupType: Int]()
         var extraType: ExtraType = .empty
+        let name = standard.value(forKey: "name") as? String
         
         for key in UDKeys.allCases {
             let stringKey = key.rawValue
@@ -177,9 +213,10 @@ class Customize: UIViewController {
 
         // Change UI depending on if there is data
         // What happends when you select the drink?
-        let drinkModel = UDDrinkModel(uid: uid, baseType: baseType, milkServings: milkServings, syrupServings: syrupServings, extraType: extraType)
-        print(drinkModel)
-        
+        if let baseType = baseType {
+            let drinkModel = UDDrinkModel(name: name, uid: uid, baseType: baseType, milkServings: milkServings, syrupServings: syrupServings, extraType: extraType)
+            self.drinkModel = drinkModel
+        }
     }
     
     
