@@ -37,6 +37,10 @@ class CustomCoffeeBase: CustomCoffeeParentViewController {
         UserDefaults.standard.setValue(selectedModel.type.rawValue, forKey: UDKeys.baseDrink.rawValue)
     }
     
+    override func removeSave() {
+        UserDefaults.standard.removeObject(forKey: UDKeys.baseDrink.rawValue)
+    }
+    
     override func handleNext() {
         if selectedCell != nil {
             // Save data

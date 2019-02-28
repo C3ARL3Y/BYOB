@@ -61,7 +61,6 @@ class BaristaPicks: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
     }
     

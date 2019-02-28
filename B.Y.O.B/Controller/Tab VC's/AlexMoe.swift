@@ -15,5 +15,4 @@ class AlexMoe: UIViewController {
         view.backgroundColor = UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1)
         navigationItem.title = "Alex Moe"
     }
-    
 }

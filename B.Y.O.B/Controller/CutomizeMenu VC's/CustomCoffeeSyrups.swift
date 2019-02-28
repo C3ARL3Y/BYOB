@@ -47,6 +47,10 @@ class CustomCoffeeSyrups: CustomCoffeeParentViewController {
     override func handleSave() {
         UserDefaults.standard.setValue(data, forKey: UDKeys.syrup.rawValue)
     }
+    
+    override func removeSave() {
+        UserDefaults.standard.removeObject(forKey: UDKeys.syrup.rawValue)
+    }
 }
 
 extension CustomCoffeeSyrups: UITableViewDelegate, UITableViewDataSource {

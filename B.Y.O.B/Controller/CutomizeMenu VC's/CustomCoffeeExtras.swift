@@ -38,8 +38,12 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
         }
         UserDefaults.standard.setValue(selectedModel.type.rawValue, forKey: UDKeys.extras.rawValue)
     }
+    
+    override func removeSave() {
+        UserDefaults.standard.removeObject(forKey: UDKeys.extras.rawValue)
+    }
+    
     override func handleNext() {
-        
         // Save data to database
         
         if selectedCell != nil {
@@ -91,7 +95,6 @@ extension CustomCoffeeExtras: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
 extension CustomCoffeeExtras: SelectedCheckBoxDelegate {
     func selected(cell: UITableViewCell) {
         if let cell = cell as? ExtrasCell {
@@ -102,4 +105,3 @@ extension CustomCoffeeExtras: SelectedCheckBoxDelegate {
         }
     }
 }
-
