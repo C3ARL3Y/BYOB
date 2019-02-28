@@ -63,11 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-//<<<<<<< HEAD
         window?.rootViewController = CustomTabBarController()
-//=======
-        //window?.rootViewController = CustomCoffeeBase()
-//>>>>>>> 0bfffccecffb3a899ea22bb58da0d1d843ac35fe
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 175/255, green: 136/255, blue: 117/255, alpha: 1)
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]

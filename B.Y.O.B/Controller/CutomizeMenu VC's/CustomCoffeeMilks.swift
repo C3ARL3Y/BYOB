@@ -24,9 +24,8 @@ class CustomCoffeeMilks: CustomCoffeeParentViewController {
         return label
     }()
     
-    var milkModels = [MilkModel(name: "Whole Milk", caloriesPer2oz: 40, protein: 2, carbs: 3, fat: 2, sugar: 3),
-                      MilkModel(name: "2% Milk", caloriesPer2oz: 30, protein: 2, carbs: 3, fat: 1.3, sugar: 3),
-                      MilkModel(name: "1% Milk", caloriesPer2oz: 25, protein: 2, carbs: 3, fat: 0.75, sugar: 3)]
+    var milkModels = MilkModel.getStaticModels()
+    var data = [String: Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +42,10 @@ class CustomCoffeeMilks: CustomCoffeeParentViewController {
     }
     
     override func tableViewRegisterCells() {
-        tableView.register(AddedElementsCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    override func handleSave() {
+        UserDefaults.standard.setValue(data, forKey: UDKeys.milk.rawValue)
     }
 }
 
@@ -53,22 +55,31 @@ extension CustomCoffeeMilks: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? AddedElementsCell {
-            let model = milkModels[indexPath.row]
-            cell.titleLabel.text = model.name
-            cell.caloriesLabel.text = "Calories: \(model.caloriesPer2oz)"
-            cell.proteinLabel.text = "Protein: \(model.protein)"
-            cell.carbsLabel.text = "Carbs: \(model.carbs)"
-            cell.fatsLabel.text = "Fats: \(model.fat)"
-            cell.fatsLabel.text = "Sugar: \(model.sugar)"
-            
-            cell.setupCell()
-            return cell
+        let cell = MilkCell()
+        let model = milkModels[indexPath.row]
+        cell.type = model.type
+        cell.titleLabel.text = model.name
+        cell.caloriesLabel.text = "Calories: \(model.caloriesPer2oz)"
+        cell.proteinLabel.text = "Protein: \(model.protein)"
+        cell.carbsLabel.text = "Carbs: \(model.carbs)"
+        cell.fatsLabel.text = "Fats: \(model.fat)"
+        cell.fatsLabel.text = "Sugar: \(model.sugar)"
+        cell.delegate = self
+        if let value = data[cell.type.rawValue] {
+            cell.servingSizeLabel.text = "\(value)"
+            cell.stepper.value = Double(value)
         }
-        return UITableViewCell()
+        cell.setupCell()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60 * 6
+    }
+}
+
+extension CustomCoffeeMilks: MilkCellDelegate {
+    func updated(value: Int, for milkType: MilkType) {
+        data.updateValue(value, forKey: milkType.rawValue)
     }
 }

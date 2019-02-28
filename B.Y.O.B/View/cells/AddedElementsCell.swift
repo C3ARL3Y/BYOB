@@ -20,7 +20,7 @@ class AddedElementsCell: UITableViewCell {
     let fatsLabel = InfoLabel()
     let sugarLabel = InfoLabel()
     
-    lazy var milkStepper: UIStepper = {
+    lazy var stepper: UIStepper = {
         let stepper = UIStepper()
         
         stepper.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ class AddedElementsCell: UITableViewCell {
         return stepper
     }()
     
-    let milkServingLabel = UILabel().configured {
+    let servingSizeLabel = UILabel().configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = UIColor.white
         $0.layer.cornerRadius = 5
@@ -42,10 +42,9 @@ class AddedElementsCell: UITableViewCell {
         $0.textAlignment = .center
         $0.text = "0"
     }
-    
+
     @objc func handleWholeMilkStepper() {
-        milkServingLabel.text = "\(Int(milkStepper.value))"
-        
+        servingSizeLabel.text = "\(Int(stepper.value))"
     }
     
     func setupCell() {
@@ -59,12 +58,12 @@ class AddedElementsCell: UITableViewCell {
         addSubview(carbsLabel)
         addSubview(fatsLabel)
         addSubview(sugarLabel)
-        addSubview(milkStepper)
-        addSubview(milkServingLabel)
+        addSubview(stepper)
+        addSubview(servingSizeLabel)
         
-        milkStepper.anchor(top: centerYAnchor, leading: caloriesLabel.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5), size: CGSize(width: 75, height: 50))
+        stepper.anchor(top: centerYAnchor, leading: caloriesLabel.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5), size: CGSize(width: 75, height: 50))
         
-        milkServingLabel.anchor(top: milkStepper.topAnchor, leading: milkStepper.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: -7, left: 30, bottom: 0, right: 0), size: CGSize(width: 50, height: 50))
+        servingSizeLabel.anchor(top: stepper.topAnchor, leading: stepper.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: -7, left: 30, bottom: 0, right: 0), size: CGSize(width: 50, height: 50))
         
         var recentLabel: UILabel?
         

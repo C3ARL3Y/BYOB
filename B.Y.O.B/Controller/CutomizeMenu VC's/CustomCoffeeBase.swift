@@ -10,11 +10,7 @@ import UIKit
 
 class CustomCoffeeBase: CustomCoffeeParentViewController {
     
-    var baseDrinks = [
-    CoffeeBaseModel(name: "Hot Coffee", tall: 0, grande: 0, venti: 0),
-    CoffeeBaseModel(name: "Americano Hot/Iced", tall: 0, grande: 0, venti: 0),
-    CoffeeBaseModel(name: "Iced Coffee UNSWEET", tall: 0, grande: 0, venti: 0)
-    ]
+    var baseDrinks = CoffeeBaseModel.getStaticModels()
     var selectedCell: CoffeeBaseCell?
     
     override func viewDidLoad() {
@@ -32,11 +28,19 @@ class CustomCoffeeBase: CustomCoffeeParentViewController {
     }
     
     override func tableViewRegisterCells() {
-        tableView.register(CoffeeBaseCell.self, forCellReuseIdentifier: "cell")
     }
     
-  override func handleNext() {
+    override func handleSave() {
+        guard let selectedModel = selectedCell?.coffeeBaseModel else {
+            return
+        }
+        UserDefaults.standard.setValue(selectedModel.type.rawValue, forKey: UDKeys.baseDrink.rawValue)
+    }
+    
+    override func handleNext() {
         if selectedCell != nil {
+            // Save data
+            handleSave()
             present(nextViewController, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Please Select a Coffee Base", message: "", preferredStyle: .alert)
@@ -65,14 +69,17 @@ extension CustomCoffeeBase: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CoffeeBaseCell {
-            let model = baseDrinks[indexPath.row]
-            cell.coffeeBaseModel = model
-            cell.setupCell()
-            cell.delegate = self
-            return cell
+        let cell = CoffeeBaseCell()
+        let model = baseDrinks[indexPath.row]
+        cell.coffeeBaseModel = model
+        cell.setupCell()
+        cell.delegate = self
+        if let selectedCell = selectedCell {
+            if selectedCell.coffeeBaseModel.type == model.type {
+                cell.checkBoxPressed()
+            }
         }
-        return UITableViewCell()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

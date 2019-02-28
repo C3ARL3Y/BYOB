@@ -12,9 +12,7 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
     
     var selectedCell: ExtrasCell?
     
-    var extraModels = [ExtraModel(name: "Light Caramel Drizzle", calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0),
-                       ExtraModel(name: "Light Mocha Drizzle", calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0),
-                       ExtraModel(name: "Cinnamin Powder", calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0)]
+    var extraModels = ExtraModel.getStaticModels()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +32,19 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
         tableView.register(ExtrasCell.self, forCellReuseIdentifier: "cell")
     }
     
+    override func handleSave() {
+        guard let selectedModel = selectedCell?.extraModel else {
+            return
+        }
+        UserDefaults.standard.setValue(selectedModel.type.rawValue, forKey: UDKeys.extras.rawValue)
+    }
     override func handleNext() {
         
-        // Save data to database 
+        // Save data to database
         
         if selectedCell != nil {
-            present(nextViewController, animated: true, completion: nil)
+            handleSave()
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Please Select an Extra", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -67,14 +72,18 @@ extension CustomCoffeeExtras: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ExtrasCell {
-            let model = extraModels[indexPath.row]
-            cell.label.text = model.name
-            cell.setupCell()
-            cell.delegate = self
-            return cell
+        let cell = ExtrasCell()
+        let model = extraModels[indexPath.row]
+        cell.label.text = model.name
+        cell.setupCell()
+        cell.delegate = self
+        cell.extraModel = model
+        if let selectedCell = selectedCell {
+            if selectedCell.extraModel.type == model.type {
+                cell.checkBoxPressed()
+            }
         }
-        return UITableViewCell()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
