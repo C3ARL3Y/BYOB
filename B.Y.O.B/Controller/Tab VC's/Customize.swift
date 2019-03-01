@@ -45,22 +45,26 @@ class Customize: UIViewController {
     }()
     
     lazy var youDrinkButton: UIButton = {
-        let label = UIButton()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.titleLabel?.numberOfLines = 2
-        label.titleLabel?.lineBreakMode = .byWordWrapping
-        label.setTitle("", for: .normal)
-        label.setTitleColor(UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1), for: .normal)
-        label.titleLabel?.textAlignment = .center
-        label.addTarget(self, action: #selector(yourDrinkButtonpressed), for: .touchUpInside)
-        return label
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.lineBreakMode = .byWordWrapping
+        button.setTitle("", for: .normal)
+        button.setTitleColor(UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1), for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.addTarget(self, action: #selector(yourDrinkButtonpressed), for: .touchUpInside)
+        button.backgroundColor = .tanTitle
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.isHidden = true
+        return button
     }()
     
     let beginOrderButton: UIButton = {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Tap To Begin Customizing Your Next Drink!", for: UIControl.State.normal)
+        button.setTitle("Tap To Begin Customizing Your Drink!", for: UIControl.State.normal)
         button.setTitleColor(UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1), for: UIControl.State.normal)
         button.titleLabel?.lineBreakMode = .byCharWrapping
         button.titleLabel?.numberOfLines = 0
@@ -162,7 +166,10 @@ class Customize: UIViewController {
     }
     
     func updateUIWithModel() {
-        youDrinkButton.setTitle(drinkModel != nil ? "DRINK CREATED, SAVE IT TO FAVORITES FOREVER" : "", for: .normal)
+        youDrinkButton.isHidden = drinkModel == nil
+        youDrinkButton.setTitle(drinkModel != nil ? "CURRENT DRINK" : "", for: .normal)
+        
+        beginOrderButton.setTitle(drinkModel == nil ? "Tap To Begin Customizing Your Drink!" : "Tap To Override Current Drink", for: .normal)
     }
     
     private func loadCustomDrink() {

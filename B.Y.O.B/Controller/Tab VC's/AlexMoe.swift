@@ -48,7 +48,6 @@ class AlexMoe: UIViewController {
             return
         }
         
-        
         Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
             if let error = error {
                 print(error)
@@ -63,7 +62,25 @@ class AlexMoe: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1)
         navigationItem.title = "Alex Moe"
+        let bar = UIBarButtonItem(title: "Signup", style: .plain, target: self, action: #selector(joinEmailList))
+         bar.tintColor = .tanTitle
+        navigationItem.rightBarButtonItem = bar
         setupViews()
+    }
+    
+    @objc func joinEmailList() {
+        let alert = UIAlertController(title: "", message: "Signup for Email List", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "email address"
+            textField.keyboardType = .emailAddress
+        })
+        let action = UIAlertAction(title: "Signup", style: .default, handler: { (updateAction) in
+            if let email = alert.textFields?.first?.text, !email.isEmpty {
+                FirebaseService.upload(emailAddress: email)
+            }
+        })
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

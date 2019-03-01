@@ -78,6 +78,7 @@ extension Favorites: UITableViewDataSource {
         cell.textLabel?.textColor = .tanTitle
         return cell
     }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let drink = drinks[indexPath.row]
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
@@ -90,6 +91,4 @@ extension Favorites: UITableViewDataSource {
         
         return [deleteAction]
     }
-    
-    
 }
