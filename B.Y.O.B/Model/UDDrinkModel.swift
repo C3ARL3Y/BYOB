@@ -43,7 +43,8 @@ extension UDDrinkModel {
     }
     
     static func convert(from data: [String: Any]) -> UDDrinkModel? {
-        let uid = UUID()
+        let uid = data["uid"] as? String
+        let uuid = UUID(uuidString: uid ?? "")
         var baseType: CoffeeBaseType?
         var milkServings = [MilkType: Int]()
         var syrupServings = [SyrupType: Int]()
@@ -73,8 +74,8 @@ extension UDDrinkModel {
                 }
         }
         
-        if let baseType = baseType {
-            let drinkModel = UDDrinkModel(name: name, uid: uid, baseType: baseType, milkServings: milkServings, syrupServings: syrupServings, extraType: extraType)
+        if let baseType = baseType, let uuid = uuid {
+            let drinkModel = UDDrinkModel(name: name, uid: uuid, baseType: baseType, milkServings: milkServings, syrupServings: syrupServings, extraType: extraType)
             return drinkModel
         }
         return nil 
