@@ -109,8 +109,10 @@ extension ViewBaristaPicsViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell().configured { cell in
-            let drink = drinks[indexPath.row]
-            cell.textLabel?.text = drink.name
+            if indexPath.row < drinks.count {
+                let drink = drinks[indexPath.row]
+                cell.textLabel?.text = drink.name.isEmpty ? "Untitled Drink" : drink.name
+            }
         }
     }
     
