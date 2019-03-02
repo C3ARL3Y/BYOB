@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 class AlexMoe: UIViewController {
 
-    let profileImage = UIImageView(image: UIImage(named: "AlexMoeButtonImg")).configured {
+    let profileImage = UIImageView(image: UIImage(named: "AlexMoeImg")).configured {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFit
     }
@@ -41,6 +41,10 @@ class AlexMoe: UIViewController {
         $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = .tanTitle
         $0.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+    }
+    
+    lazy var scrollView = UIScrollView().configured {
+        $0.translatesAutoresizingMaskIntoConstraints = false
     }
     
     @objc func loginButtonPressed() {
@@ -91,12 +95,22 @@ class AlexMoe: UIViewController {
     }
 
     func setupViews() {
-        view.addSubview(profileImage)
-        view.addSubview(emailTextField)
-        view.addSubview(passTextField)
-        view.addSubview(loginButton)
+        view.addSubview(scrollView)
         
-        profileImage.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 150, height: 150))
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 2)
+        
+        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
+        scrollView.heightAnchor.constraint(equalTo: view.heightAnchor
+            , multiplier: 0.75).isActive = true
+        
+        scrollView.addSubview(profileImage)
+        scrollView.addSubview(emailTextField)
+        scrollView.addSubview(passTextField)
+        scrollView.addSubview(loginButton)
+        
+        profileImage.anchor(top: scrollView.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 250, height: 250))
         profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         
@@ -104,7 +118,10 @@ class AlexMoe: UIViewController {
         
         passTextField.anchor(top: emailTextField.bottomAnchor, leading: emailTextField.leadingAnchor, bottom: nil, trailing: emailTextField.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 50))
         
-        loginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20), size: CGSize(width: 0, height: 50))
+        loginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
+        loginButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.075).isActive = true
+        loginButton.topAnchor.constraint(equalTo: passTextField.bottomAnchor, constant: view.frame.height * 0.05).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
     }
 }
