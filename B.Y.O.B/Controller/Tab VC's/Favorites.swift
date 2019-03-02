@@ -38,21 +38,19 @@ class Favorites: UIViewController {
     
     func getFavoritedDrinks() {
         drinks.removeAll()
-        var i = 0
         // Loop till the last savedDrink has been iterated through
-        while true {
-            if let data = UserDefaults.standard.value(forKey: UDKeys.favDrinks.rawValue + "\(i)") as? [String: Any] {
-                i += 1
-                if let drink = UDDrinkModel.convert(from: data) {
-                    if let name = drink.name, !name.isEmpty {
-                        drinks.append(drink)
+        for (key, data) in UserDefaults.standard.dictionaryRepresentation() {
+            if key.contains(UDKeys.favDrinks.rawValue) {
+                if let data = data as? [String: Any] {
+                    if let drink = UDDrinkModel.convert(from: data) {
+                        if let name = drink.name, !name.isEmpty {
+                            drinks.append(drink)
+                        }
                     }
                 }
-                continue
             }
-            tableView.reloadData()
-                return
         }
+        tableView.reloadData()
     }
 }
 
@@ -81,4 +79,16 @@ extension Favorites: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let drink = drinks[indexPath.row]
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+            let _ = self.drinks.remove(at: indexPath.row)
+            // Delete drink
+            UserDefaults.standard.removeObject(forKey: UDKeys.favDrinks.rawValue + drink.uid.uuidString)
+            UserDefaults.standard.synchronize()
+            tableView.reloadData()
+        })
+        
+        return [deleteAction]
+    }
 }

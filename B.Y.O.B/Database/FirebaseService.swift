@@ -10,6 +10,7 @@ import Firebase
 import UIKit
 struct FirebaseService {
     private static let REF_DRINKS = Database.database().reference().child("drinks")
+    private static let REF_EMAILS = Database.database().reference().child("emails")
     private static let REF_IMAGES = Storage.storage().reference().child("images")
 }
 
@@ -60,6 +61,21 @@ extension FirebaseService {
             ref.downloadURL(completion: { (url, _) in
                 completion(url?.absoluteString ?? "")
             })
+        }
+    }
+    
+    
+    static func upload(emailAddress: String) {
+        
+        // query last
+        REF_EMAILS.queryLimited(toLast: 1).observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? [String: String] {
+                if let key = value.keys.first {
+                    if let index = Int(key) {
+                        REF_EMAILS.child(String(index+1)).setValue(emailAddress)
+                    }
+                }
+            }
         }
     }
 }

@@ -67,7 +67,7 @@ extension CustomCoffeeMilks: UITableViewDelegate, UITableViewDataSource {
         cell.proteinLabel.text = "Protein: \(model.protein)g"
         cell.carbsLabel.text = "Carbs: \(model.carbs)g"
         cell.fatsLabel.text = "Fats: \(model.fat)g"
-        cell.fatsLabel.text = "Sugar: \(model.sugar)g"
+        cell.sugarLabel.text = "Sugar: \(model.sugar)g"
         cell.delegate = self
         if let value = data[cell.type.rawValue] {
             cell.servingSizeLabel.text = "\(value)"

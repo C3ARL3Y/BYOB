@@ -169,12 +169,9 @@
 		094A37F5221B2CB400DB2277 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				094A41FE2229C5950035F8E3 /* Nutrition Models */,
 				094A3801221B331600DB2277 /* FIRNutrientsModel.swift */,
 				094A37FF221B2EBD00DB2277 /* FIRDrinkModel.swift */,
-				09646CFD22208641007463CB /* CoffeeBaseModel.swift */,
-				0945BEC72221D29700529E31 /* MilkModel.swift */,
-				0945BEC92221D4EF00529E31 /* SyrupModel.swift */,
-				0945BECB2221D9D700529E31 /* ExtraModel.swift */,
 				0926C83B2224C35C0093A68E /* UDDrinkModel.swift */,
 			);
 			path = Model;
@@ -214,6 +211,17 @@
 				09C0AE7522247CBA00DFE033 /* UDKeys.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		094A41FE2229C5950035F8E3 /* Nutrition Models */ = {
+			isa = PBXGroup;
+			children = (
+				09646CFD22208641007463CB /* CoffeeBaseModel.swift */,
+				0945BECB2221D9D700529E31 /* ExtraModel.swift */,
+				0945BEC72221D29700529E31 /* MilkModel.swift */,
+				0945BEC92221D4EF00529E31 /* SyrupModel.swift */,
+			);
+			path = "Nutrition Models";
 			sourceTree = "<group>";
 		};
 		09646D052220A7A4007463CB /* cells */ = {

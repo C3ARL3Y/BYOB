@@ -44,22 +44,27 @@ class Customize: UIViewController {
         return imageView
     }()
     
-    let yourDrinkLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 2
-        label.lineBreakMode = .byWordWrapping
-        label.text = ""
-        label.textColor = UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1)
-        label.textAlignment = .center
-        return label
+    lazy var youDrinkButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.lineBreakMode = .byWordWrapping
+        button.setTitle("", for: .normal)
+        button.setTitleColor(UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1), for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.addTarget(self, action: #selector(yourDrinkButtonpressed), for: .touchUpInside)
+        button.backgroundColor = .tanTitle
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.isHidden = true
+        return button
     }()
     
     let beginOrderButton: UIButton = {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Tap To Begin Customizing Your Next Drink!", for: UIControl.State.normal)
+        button.setTitle("Tap To Begin Customizing Your Drink!", for: UIControl.State.normal)
         button.setTitleColor(UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1), for: UIControl.State.normal)
         button.titleLabel?.lineBreakMode = .byCharWrapping
         button.titleLabel?.numberOfLines = 0
@@ -79,9 +84,15 @@ class Customize: UIViewController {
         loadCustomDrink()
     }
     
+    @objc func yourDrinkButtonpressed() {
+        present(FavoriteDrinkViewerViewController().configured {
+            $0.drink = drinkModel
+        }, animated: true, completion: nil)
+    }
+    
     @objc func favoriteButtonPressed() {
         // add drink to favorites
-        guard let _ = drinkModel else {
+        guard let drinkModel = drinkModel else {
             return
         }
         
@@ -90,22 +101,12 @@ class Customize: UIViewController {
             textField.placeholder = "name..."
         })
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (updateAction) in
-            self.drinkModel?.name = alert.textFields?.first?.text
-            
+            let name = alert.textFields?.first?.text
+            self.drinkModel?.name = name
             let data = self.drinkModel?.convertToData()
-            var set = true
-            var i = 0
-            // Loop till the last savedDrink has been iterated through
-            while set {
-                if let _ = UserDefaults.standard.value(forKey: UDKeys.favDrinks.rawValue + "\(i)") as? [String: Any] {
-                    i+=1
-                } else {
-                    UserDefaults.standard.setValue(data, forKey: UDKeys.favDrinks.rawValue + "\(i)")
-                    set = false
-                    self.drinkModel = nil
-                    self.deleteData()
-                }
-            }
+            UserDefaults.standard.setValue(data, forKey: UDKeys.favDrinks.rawValue + drinkModel.uid.uuidString)
+            self.drinkModel = nil
+            self.deleteData()
         }))
         
         self.present(alert, animated: false)
@@ -138,7 +139,7 @@ class Customize: UIViewController {
     func setupScrollView() {
         scrollView.addSubview(logo)
         scrollView.addSubview(customizeLabel)
-        scrollView.addSubview(yourDrinkLabel)
+        scrollView.addSubview(youDrinkButton)
         
         logo.leftAnchor.constraint(equalTo: view.leftAnchor, constant: (view.frame.width * 0.05)).isActive = true
         logo.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: (view.frame.height * 0.025)).isActive = true
@@ -150,10 +151,10 @@ class Customize: UIViewController {
         customizeLabel.heightAnchor.constraint(equalTo: logo.heightAnchor, multiplier: 1).isActive = true
         customizeLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.55).isActive = true
         
-        yourDrinkLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        yourDrinkLabel.topAnchor.constraint(equalTo: customizeLabel.bottomAnchor, constant: view.frame.height * 0.05).isActive = true
-        yourDrinkLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
-        yourDrinkLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
+        youDrinkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        youDrinkButton.topAnchor.constraint(equalTo: customizeLabel.bottomAnchor, constant: view.frame.height * 0.05).isActive = true
+        youDrinkButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
+        youDrinkButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
         
         scrollView.addSubview(beginOrderButton)
         
@@ -165,7 +166,10 @@ class Customize: UIViewController {
     }
     
     func updateUIWithModel() {
-        yourDrinkLabel.text = drinkModel != nil ? "DRINK CREATED, SAVE IT TO FAVORITES FOREVER" : ""
+        youDrinkButton.isHidden = drinkModel == nil
+        youDrinkButton.setTitle(drinkModel != nil ? "CURRENT DRINK" : "", for: .normal)
+        
+        beginOrderButton.setTitle(drinkModel == nil ? "Tap To Begin Customizing Your Drink!" : "Tap To Override Current Drink", for: .normal)
     }
     
     private func loadCustomDrink() {

@@ -68,7 +68,7 @@ extension CustomCoffeeSyrups: UITableViewDelegate, UITableViewDataSource {
         cell.proteinLabel.text = "Protein: \(model.protein)"
         cell.carbsLabel.text = "Carbs: \(model.carbs)"
         cell.fatsLabel.text = "Fats: \(model.fat)"
-        cell.fatsLabel.text = "Sugar: \(model.sugar)"
+        cell.sugarLabel.text = "Sugar: \(model.sugar)"
         cell.setupCell()
         if let value = data[cell.type.rawValue] {
             cell.servingSizeLabel.text = "\(value)"
