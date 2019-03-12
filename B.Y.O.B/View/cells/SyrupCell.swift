@@ -18,7 +18,15 @@ final class SyrupCell: AddedElementsCell {
     weak var delegate: SyrupCellDelegate?
     
     override func handleWholeMilkStepper() {
-        super.handleWholeMilkStepper()
-        delegate?.updated(value: Int(stepper.value), for: type)
+        let value = Int(stepper.value)
+        if value == 0 {
+            servingSizeLabel.text = "empty"
+            return
+        }
+        servingSizeLabel.text = "\(value)"
+        
+        defer {
+            delegate?.updated(value: Int(value), for: type)
+        }
     }
 }

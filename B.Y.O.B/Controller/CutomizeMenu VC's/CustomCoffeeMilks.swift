@@ -70,8 +70,8 @@ extension CustomCoffeeMilks: UITableViewDelegate, UITableViewDataSource {
         cell.sugarLabel.text = "Sugar: \(model.sugar)g"
         cell.delegate = self
         if let value = data[cell.type.rawValue] {
-            cell.servingSizeLabel.text = "\(value)"
             cell.stepper.value = Double(value)
+            cell.handleWholeMilkStepper()
         }
         cell.setupCell()
         return cell

@@ -40,7 +40,7 @@ class AddedElementsCell: UITableViewCell {
         $0.textColor = UIColor(red: 52/255, green: 30/255, blue: 21/255, alpha: 1)
         $0.layer.borderWidth = 1
         $0.textAlignment = .center
-        $0.text = "0"
+        $0.text = "empty"
     }
 
     @objc func handleWholeMilkStepper() {
@@ -63,7 +63,7 @@ class AddedElementsCell: UITableViewCell {
         
         stepper.anchor(top: centerYAnchor, leading: caloriesLabel.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5), size: CGSize(width: 75, height: 50))
         
-        servingSizeLabel.anchor(top: stepper.topAnchor, leading: stepper.trailingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: -7, left: 30, bottom: 0, right: 0), size: CGSize(width: 50, height: 50))
+        servingSizeLabel.anchor(top: stepper.topAnchor, leading: stepper.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: UIEdgeInsets(top: -7, left: 30, bottom: 0, right: 10), size: CGSize(width: 0, height: 50))
         
         var recentLabel: UILabel?
         

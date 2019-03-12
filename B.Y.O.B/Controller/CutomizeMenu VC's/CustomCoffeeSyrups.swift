@@ -71,8 +71,8 @@ extension CustomCoffeeSyrups: UITableViewDelegate, UITableViewDataSource {
         cell.sugarLabel.text = "Sugar: \(model.sugar)"
         cell.setupCell()
         if let value = data[cell.type.rawValue] {
-            cell.servingSizeLabel.text = "\(value)"
             cell.stepper.value = Double(value)
+            cell.handleWholeMilkStepper()
         }
         return cell
     }
