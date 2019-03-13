@@ -33,6 +33,12 @@ extension MilkModel {
             return MilkModel(name: "Hald and Half: 2oz", caloriesPer2oz: 35, protein: 0, carbs: 1, fat: 3, sugar: 1, type: type)
         case .heavy_cream:
             return MilkModel(name: "Heavy Cream: 2oz", caloriesPer2oz: 90, protein: 0, carbs: 0, fat: 9, sugar: 0, type: type)
+        case .coconut_milk:
+            return MilkModel(name: "Coconut Milk: 2oz", caloriesPer2oz: 20, protein: 0.25, carbs: 1, fat: 1.3, sugar: 1, type: type)
+        case .almond_milk:
+            return MilkModel(name: "Almond Milk: 2oz", caloriesPer2oz: 15, protein: 0.5, carbs: 1.3, fat: 1, sugar: 0.75, type: type)
+        case .soy_milk:
+            return MilkModel(name: "Soy Milk: 2oz", caloriesPer2oz: 40, protein: 1.8, carbs: 4, fat: 1, sugar: 3.1, type: type)
         }
     }
     
@@ -53,4 +59,7 @@ enum MilkType: String, CaseIterable {
     case half_and_half
     case heavy_cream
     // Non dair milk and so on
+    case coconut_milk
+    case almond_milk
+    case soy_milk
 }

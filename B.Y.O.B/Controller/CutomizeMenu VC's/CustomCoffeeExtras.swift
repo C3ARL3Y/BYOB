@@ -17,7 +17,6 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         coffeeBaseTitle.text = "Extras"
-        nextViewController = CustomCoffeeMilks()
     }
     
     override func setupDelegates() {
@@ -36,6 +35,7 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
         guard let selectedModel = selectedCell?.extraModel else {
             return
         }
+        
         UserDefaults.standard.setValue(selectedModel.type.rawValue, forKey: UDKeys.extras.rawValue)
     }
     
@@ -49,6 +49,9 @@ class CustomCoffeeExtras: CustomCoffeeParentViewController {
         if selectedCell != nil {
             handleSave()
             UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+            UIApplication.shared.keyWindow?.rootViewController?.present(FavoriteDrinkViewerViewController().configured {
+                $0.drink = CustomDrink.loadCustomDrink()
+                }, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Please Select an Extra", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

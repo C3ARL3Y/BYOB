@@ -112,6 +112,7 @@ extension ViewBaristaPicsViewController: UITableViewDelegate, UITableViewDataSou
             if indexPath.row < drinks.count {
                 let drink = drinks[indexPath.row]
                 cell.textLabel?.text = drink.name.isEmpty ? "Untitled Drink" : drink.name
+                cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
             }
         }
     }

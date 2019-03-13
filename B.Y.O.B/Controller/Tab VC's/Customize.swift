@@ -81,7 +81,7 @@ class Customize: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadCustomDrink()
+        drinkModel = CustomDrink.loadCustomDrink()
     }
     
     @objc func yourDrinkButtonpressed() {
@@ -170,50 +170,6 @@ class Customize: UIViewController {
         youDrinkButton.setTitle(drinkModel != nil ? "CURRENT DRINK" : "", for: .normal)
         
         beginOrderButton.setTitle(drinkModel == nil ? "Tap To Begin Customizing Your Drink!" : "Tap To Override Current Drink", for: .normal)
-    }
-    
-    private func loadCustomDrink() {
-        let standard = UserDefaults.standard
-        
-        let uid = UUID()
-        var baseType: CoffeeBaseType?
-        var milkServings = [MilkType: Int]()
-        var syrupServings = [SyrupType: Int]()
-        var extraType: ExtraType = .empty
-        let name = standard.value(forKey: "name") as? String
-        
-        for key in UDKeys.allCases {
-            let stringKey = key.rawValue
-            if standard.value(forKey: stringKey) != nil {
-                // Has data
-                if let stringValue = standard.value(forKey: stringKey) as? String {
-                    if let coffeeBase = CoffeeBaseType.init(rawValue: stringValue) {
-                        baseType = coffeeBase
-                    } else if let extras = ExtraType.init(rawValue: stringValue) {
-                        extraType = extras
-                    } else {
-                        
-                    }
-                }
-                
-                if let dict = standard.value(forKey: stringKey) as? [String: Int] {
-                    for (stringValue, numberOfServings) in dict {
-                        if let type = MilkType.init(rawValue: stringValue) {
-                            milkServings.updateValue(numberOfServings, forKey: type)
-                        } else if let type = SyrupType.init(rawValue: stringValue) {
-                            syrupServings.updateValue(numberOfServings, forKey: type)
-                        }
-                    }
-                }
-            }
-        }
-        
-        // Change UI depending on if there is data
-        // What happends when you select the drink?
-        if let baseType = baseType {
-            let drinkModel = UDDrinkModel(name: name, uid: uid, baseType: baseType, milkServings: milkServings, syrupServings: syrupServings, extraType: extraType)
-            self.drinkModel = drinkModel
-        }
     }
     
     @objc func handleBeginDrink() {
