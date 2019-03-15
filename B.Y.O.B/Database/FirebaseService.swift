@@ -31,7 +31,8 @@ extension FirebaseService {
                                    "steps": steps,
                                    "imageURL": imageURL ?? "",
                                    "nutrients": nutrientsData,
-                                   "type": typeValue]
+                                   "type": typeValue,
+                                    "timestamp": Int(Date().timeIntervalSince1970)]
         
         if let image = image {
             upload(image: image) { imageUrl in
@@ -81,8 +82,28 @@ extension FirebaseService {
 // Fetch data
 extension FirebaseService {
     
-    static func fetchDrinks(of type: DrinkType, completion: @escaping (FIRDrinkModel)->()) {
-        REF_DRINKS.child(type.rawValue).queryOrderedByKey().observe(.value) { (snapshot) in
+    static func fetchDrinks(of type: DrinkType, lastTimestamp: Int?, limit: Int, completion: @escaping (FIRDrinkModel)->()) {
+        var feedQuery = REF_DRINKS.child(type.rawValue).queryOrdered(byChild: "timestamp")
+        if let latestPostTimestamp = lastTimestamp, latestPostTimestamp > 0 {
+            feedQuery = feedQuery.queryStarting(atValue: latestPostTimestamp + 1, childKey: "timestamp").queryLimited(toFirst: UInt(limit))
+        } else {
+            feedQuery = feedQuery.queryLimited(toFirst: UInt(limit))
+        }
+        
+        feedQuery.observe(.value) { (snapshot) in
+            if let value = snapshot.value as? [String: Any]{
+                for key in value.keys {
+                    if let dict = value[key] as? [String: Any] {
+                        let model = FIRDrinkModel.model(from: dict, with: key)
+                        completion(model)
+                    }
+                }
+            }
+        }
+    }
+    
+    static func fetchDrinks(of type: DrinkType, with text: String, completion: @escaping (FIRDrinkModel)->()) {
+        REF_DRINKS.child(type.rawValue).queryOrdered(byChild: "name").queryStarting(atValue: text).queryEnding(atValue: text+"\u{f8ff}").observe(.value) { (snapshot) in
             if let value = snapshot.value as? [String: Any]{
                 for key in value.keys {
                     if let dict = value[key] as? [String: Any] {
